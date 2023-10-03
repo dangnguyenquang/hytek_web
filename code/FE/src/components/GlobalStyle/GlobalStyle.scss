@@ -2,10 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap');
 
 :root { 
-  
+  --primary-background: #f8f8f8;
+  --white-background: #fff;
+  --primary-boxshadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --input-boxshadow: rgba(82, 226, 77, 0.819) 0px 0px 0px 1px inset, rgba(108, 226, 104, 0.2) 0px 0px 0px 1px;
 }
 
-html { 
+* { 
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  width: 100vw;
+  height: 100vh;
   font-size: 62.5%;
 }
 

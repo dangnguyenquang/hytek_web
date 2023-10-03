@@ -1,0 +1,50 @@
+.addproduct__container { 
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-background);
+}
+
+.addproduct__box { 
+  background-color: var(--white-background);
+  padding: 30px;
+  box-shadow: var(--primary-boxshadow);
+  border-radius: 8px;
+  min-height: 450px;
+}
+
+.addproduct__title { 
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.input__product-Name, .input__product-ID { 
+  padding: 10px;
+  display: inline-block;
+
+  & label {
+    margin-right: 10px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  & input { 
+    padding: 8px;
+    border: solid 1.5px #E2E8F0;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-weight: 100;
+    outline: none;
+    &:focus { 
+      box-shadow: var(--input-boxshadow);
+    }
+    &::placeholder { 
+      font-size: 1.3rem;
+    }
+  }
+
+
+
+}
