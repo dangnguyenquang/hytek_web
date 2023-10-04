@@ -53,9 +53,7 @@ function AddProduct() {
           <div className={cx("addproduct__title")}>
             <h1>Nhập thông tin sản phẩm</h1>
           </div>
-          
 
-          
           {/* Nhap ten */}
           <div className={cx("input__product-Name")}>
             <label>Nhập tên {NameType}</label>
@@ -75,14 +73,16 @@ function AddProduct() {
           {/* Them hinh anh */}
           <div className={cx("input__product-upload Image")}>
             <label>Ảnh sản phẩm</label>
-            <input type="file" onChange={handleFileChange} multiple />
-            <input
-              type="text"
-              placeholder="Tên thư mục"
-              value={folderName}
-              onChange={handleFolderNameChange}
-            />
-            <button onClick={handleUpload}>Tải lên</button>
+            <input className={cx('selectFile')} type="file" onChange={handleFileChange} multiple />
+            <div className={cx('input__product-upload-folderName')}>
+              <input
+                type="text"
+                placeholder="Tên thư mục"
+                value={folderName}
+                onChange={handleFolderNameChange}
+              />
+              <button onClick={handleUpload}>Xác nhận</button>
+            </div>
           </div>
 
           {/* Them file Design Data */}
@@ -95,7 +95,7 @@ function AddProduct() {
               value={folderName}
               onChange={handleFolderNameChange}
             />
-            <button onClick={handleUpload}>Tải lên</button>
+            <button onClick={handleUpload}></button>
           </div>
 
           {/* Them Manufacturing */}
@@ -108,7 +108,7 @@ function AddProduct() {
               value={folderName}
               onChange={handleFolderNameChange}
             />
-            <button onClick={handleUpload}>Tải lên</button>
+            <button onClick={handleUpload}>Thêm</button>
           </div>
 
           {/* Them file History */}
@@ -121,7 +121,7 @@ function AddProduct() {
               value={folderName}
               onChange={handleFolderNameChange}
             />
-            <button onClick={handleUpload}>Tải lên</button>
+            <button onClick={handleUpload}>Thêm</button>
           </div>
 
           {/* Them file Guidelines */}
@@ -134,7 +134,7 @@ function AddProduct() {
               value={folderName}
               onChange={handleFolderNameChange}
             />
-            <button onClick={handleUpload}>Tải lên</button>
+            <button onClick={handleUpload}>Thêm</button>
           </div>
         </div>
       </div>

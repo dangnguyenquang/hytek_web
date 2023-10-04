@@ -20,8 +20,12 @@
   margin-bottom: 50px;
 }
 
+.input__product-ID {
+  float: right;
+}
+
 .input__product-Name, .input__product-ID { 
-  padding: 10px;
+  padding: 10px 0;
   display: inline-block;
   position: relative;
 
@@ -50,11 +54,60 @@
 }
 
 .input__product-upload {
-  padding: 10px;
+  padding-top: 15px;
   display: block;
+  position: relative;
 
   & label { 
     cursor: pointer;
     font-weight: 600;
+    position: absolute;
+    top: 0;
+  }
+
+  &:not(:last-child) { 
+    margin-bottom: 10px;
+  }
+}
+
+#file-upload-button { 
+  border: solid 1.5px #E2E8F0;
+  background-color: #ccc;
+}
+
+.selectFile { 
+  padding: 10px 0 10px 0;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.input__product-upload-folderName {
+
+  & input { 
+    border: solid 1.5px #E2E8F0;
+    padding: 10px;
+    border-radius: 4px;
+    outline: none;
+
+    &:focus {
+      box-shadow: var(--input-boxshadow);
+    }
+  }
+
+  & button {
+    margin-left: 20px;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-weight: 600;
+    background-color: var(--submit-button);
+    cursor: pointer;
+    color: var(--submit-colorFont);
+    opacity: .8;
+
+    &:hover { 
+      opacity: 1;
+      box-shadow: var(--primary-boxshadow);
+    }
   }
 }
