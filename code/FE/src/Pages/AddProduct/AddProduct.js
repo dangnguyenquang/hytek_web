@@ -14,13 +14,20 @@ function AddProduct() {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [folderName, setFolderName] = useState("");
+  const [folderID, setFolderID] = useState("");
 
   const handleFileChange = (e) => {
     setSelectedFiles(e.target.files);
   };
 
+  // GET NAME 
   const handleFolderNameChange = (e) => {
     setFolderName(e.target.value);
+  };
+
+  // GET ID
+  const handleFolderIDChange = (e) => {
+    setFolderID(e.target.value);
   };
 
   const handleUpload = async () => {
@@ -31,6 +38,7 @@ function AddProduct() {
 
     const formData = new FormData();
     formData.append("folderName", folderName);
+    formData.append("folderID",folderID);
 
     for (let i = 0; i < selectedFiles.length; i++) {
       formData.append("files", selectedFiles[i]);
@@ -38,7 +46,7 @@ function AddProduct() {
 
     // Gui data cho BE
     try {
-      const response = await axios.post("/upload", formData, {
+      const response = await axios.post("/upload/img", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -62,7 +70,10 @@ function AddProduct() {
                 fontSize: "1.6rem",
               }}
             >
-              <FontAwesomeIcon className={cx('BackBtnIco')} icon={faChevronLeft} />
+              <FontAwesomeIcon
+                className={cx("BackBtnIco")}
+                icon={faChevronLeft}
+              />
               Quay lại
             </Link>
           </button>
@@ -82,13 +93,19 @@ function AddProduct() {
                 type="Name"
                 name="Name"
                 placeholder={`Tên` + " " + NameType}
+                onChange={(e) => handleFolderNameChange(e)}
               />
             </div>
 
             {/* Nhap ma */}
             <div className={cx("input__product-ID")}>
               <label>Nhập mã {NameType}</label>
-              <input type="ID" name="ID" placeholder={`Mã` + " " + NameType} />
+              <input
+                type="ID"
+                name="ID"
+                placeholder={`Mã` + " " + NameType}
+                onChange={(e) => handleFolderIDChange(e)}
+              />
             </div>
           </div>
 
