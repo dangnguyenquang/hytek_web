@@ -4,11 +4,13 @@
 :root { 
   --primary-background: #f8f8f8;
   --white-background: #fff;
-  --primary-boxshadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --primary-boxshadow: rgba(11, 108, 254, 0.534) 0px 7px 29px 0px;
   --input-boxshadow: rgba(82, 226, 77, 0.819) 0px 0px 0px 1px inset, rgba(108, 226, 104, 0.2) 0px 0px 0px 1px;
   --submit-button: rgba(145, 255, 141, 0.819);
-  --submit-colorFont: rgba(6, 74, 4, 0.819);
+  --submit-buttonShadow: rgba(112, 225, 108, 0.847) 0px 3px 8px 0px;
+  --submit-colorFont: rgba(8, 119, 5, 0.803);
   --primary-colorFont: #000;
+  --primary-boderColor: #E2E8F0;
 }
 
 * { 

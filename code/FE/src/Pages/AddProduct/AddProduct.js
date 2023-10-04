@@ -3,6 +3,10 @@ import { Fragment, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import styles from "./AddProduct.scss";
+import { Link } from "react-router-dom";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const cx = classNames.bind(styles);
 
 function AddProduct() {
@@ -48,39 +52,56 @@ function AddProduct() {
   return (
     <Fragment>
       <div className={cx("addproduct__container")}>
+        <div className={cx("backtohomeBtn")}>
+          <button>
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+                color: "#000",
+                fontSize: "1.6rem",
+              }}
+            >
+              <FontAwesomeIcon className={cx('BackBtnIco')} icon={faChevronLeft} />
+              Quay lại
+            </Link>
+          </button>
+        </div>
+
         <div className={cx("addproduct__box")}>
           {/* Title */}
           <div className={cx("addproduct__title")}>
             <h1>Nhập thông tin sản phẩm</h1>
           </div>
 
-          {/* Nhap ten */}
-          <div className={cx("input__product-Name")}>
-            <label>Nhập tên {NameType}</label>
-            <input
-              type="Name"
-              name="Name"
-              placeholder={`Tên` + " " + NameType}
-            />
-          </div>
+          <div className={cx("input__product-Name-Id")}>
+            {/* Nhap ten */}
+            <div className={cx("input__product-Name")}>
+              <label>Nhập tên {NameType}</label>
+              <input
+                type="Name"
+                name="Name"
+                placeholder={`Tên` + " " + NameType}
+              />
+            </div>
 
-          {/* Nhap ma */}
-          <div className={cx("input__product-ID")}>
-            <label>Nhập mã {NameType}</label>
-            <input type="ID" name="ID" placeholder={`Mã` + " " + NameType} />
+            {/* Nhap ma */}
+            <div className={cx("input__product-ID")}>
+              <label>Nhập mã {NameType}</label>
+              <input type="ID" name="ID" placeholder={`Mã` + " " + NameType} />
+            </div>
           </div>
 
           {/* Them hinh anh */}
           <div className={cx("input__product-upload Image")}>
             <label>Ảnh sản phẩm</label>
-            <input className={cx('selectFile')} type="file" onChange={handleFileChange} multiple />
-            <div className={cx('input__product-upload-folderName')}>
-              <input
-                type="text"
-                placeholder="Tên thư mục"
-                value={folderName}
-                onChange={handleFolderNameChange}
-              />
+            <input
+              className={cx("selectFile")}
+              type="file"
+              onChange={handleFileChange}
+              multiple
+            />
+            <div className={cx("input__product-upload-folderName")}>
               <button onClick={handleUpload}>Xác nhận</button>
             </div>
           </div>
@@ -88,53 +109,45 @@ function AddProduct() {
           {/* Them file Design Data */}
           <div className={cx("input__product-upload DesignData")}>
             <label>Design Data</label>
-            <input type="file" onChange={handleFileChange} multiple />
             <input
-              type="text"
-              placeholder="Tên thư mục"
-              value={folderName}
-              onChange={handleFolderNameChange}
+              className={cx("selectFile")}
+              type="file"
+              onChange={handleFileChange}
+              multiple
             />
-            <button onClick={handleUpload}></button>
+            <div className={cx("input__product-upload-folderName")}>
+              <button onClick={handleUpload}>Xác nhận</button>
+            </div>
           </div>
 
           {/* Them Manufacturing */}
-          <div className={cx("input__product-upload DesignData")}>
-            <label>Manufacturing</label>
-            <input type="file" onChange={handleFileChange} multiple />
-            <input
-              type="text"
-              placeholder="Tên thư mục"
-              value={folderName}
-              onChange={handleFolderNameChange}
-            />
-            <button onClick={handleUpload}>Thêm</button>
-          </div>
 
           {/* Them file History */}
           <div className={cx("input__product-upload History")}>
             <label>Lịch sử sản xuất</label>
-            <input type="file" onChange={handleFileChange} multiple />
             <input
-              type="text"
-              placeholder="Tên thư mục"
-              value={folderName}
-              onChange={handleFolderNameChange}
+              className={cx("selectFile")}
+              type="file"
+              onChange={handleFileChange}
+              multiple
             />
-            <button onClick={handleUpload}>Thêm</button>
+            <div className={cx("input__product-upload-folderName")}>
+              <button onClick={handleUpload}>Xác nhận</button>
+            </div>
           </div>
 
           {/* Them file Guidelines */}
           <div className={cx("input__product-upload Guidelines")}>
-            <label>Trouble shooting guidelines</label>
-            <input type="file" onChange={handleFileChange} multiple />
+            <label>Guidelines</label>
             <input
-              type="text"
-              placeholder="Tên thư mục"
-              value={folderName}
-              onChange={handleFolderNameChange}
+              className={cx("selectFile")}
+              type="file"
+              onChange={handleFileChange}
+              multiple
             />
-            <button onClick={handleUpload}>Thêm</button>
+            <div className={cx("input__product-upload-folderName")}>
+              <button onClick={handleUpload}>Xác nhận</button>
+            </div>
           </div>
         </div>
       </div>

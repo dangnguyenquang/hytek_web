@@ -5,6 +5,27 @@
   justify-content: center;
   align-items: center;
   background-color: var(--primary-background);
+  background: #001c40;
+  filter: blur(5);
+  position: relative;
+}
+
+.backtohomeBtn { 
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  box-shadow: var(--primary-boxshadow);
+  
+  & button { 
+    border: solid 1px var(--primary-boderColor);
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+  }
+}
+
+.BackBtnIco { 
+  margin-right: 10px;
 }
 
 .addproduct__box { 
@@ -13,20 +34,32 @@
   box-shadow: var(--primary-boxshadow);
   border-radius: 8px;
   min-height: 450px;
+  min-width: 700px;
+
+  & > div:not(:last-child) { 
+    border-bottom: solid 1.7px var(--primary-boderColor);
+    margin-bottom: 5px;
+    padding: 15px 0 8px 0;
+  }
+
+  & > div:first-child { 
+    border: none;
+  }
 }
 
 .addproduct__title { 
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px !important;
+  padding: 0 !important;
+  cursor: pointer;
 }
 
-.input__product-ID {
-  float: right;
+.input__product-Name-Id { 
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
-.input__product-Name, .input__product-ID { 
-  padding: 10px 0;
-  display: inline-block;
+.input__product-Name, .input__product-ID {
   position: relative;
 
   & label {
@@ -34,7 +67,7 @@
     cursor: pointer;
     font-weight: 600;
     position: absolute;
-    top: -10px;
+    top: -20px;
   }
 
   & input { 
@@ -54,7 +87,8 @@
 }
 
 .input__product-upload {
-  padding-top: 15px;
+  padding-top: 20px;
+  margin-top: 8px;
   display: block;
   position: relative;
 
@@ -71,14 +105,27 @@
 }
 
 #file-upload-button { 
-  border: solid 1.5px #E2E8F0;
+  border: solid 1.5px var(--primary-boderColor);
   background-color: #ccc;
 }
 
 .selectFile { 
-  padding: 10px 0 10px 0;
-  font-size: 1.7rem;
+  padding: 10px 0;
   cursor: pointer;
+  opacity: .8;
+
+  &:hover { 
+    opacity: 1;
+  }
+
+  &::-webkit-file-upload-button {
+    font-size: 1.6rem;
+    cursor: pointer;
+    border: solid 1px var(--primary-boderColor);
+    border-radius: 4px;
+    padding: 5px;
+  }
+
 }
 
 .input__product-upload-folderName {
@@ -95,7 +142,6 @@
   }
 
   & button {
-    margin-left: 20px;
     border: none;
     border-radius: 4px;
     padding: 10px;
@@ -107,7 +153,7 @@
 
     &:hover { 
       opacity: 1;
-      box-shadow: var(--primary-boxshadow);
+      box-shadow: var(--submit-buttonShadow);
     }
   }
 }
