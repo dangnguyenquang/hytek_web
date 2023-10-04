@@ -4,9 +4,6 @@ import axios from "axios";
 import classNames from "classnames";
 import styles from "./AddProduct.scss";
 import { Link } from "react-router-dom";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 const cx = classNames.bind(styles);
 
 function AddProduct() {
@@ -70,10 +67,6 @@ function AddProduct() {
                 fontSize: "1.6rem",
               }}
             >
-              <FontAwesomeIcon
-                className={cx("BackBtnIco")}
-                icon={faChevronLeft}
-              />
               Quay lại
             </Link>
           </button>
