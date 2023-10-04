@@ -49,9 +49,13 @@ function AddProduct() {
     <Fragment>
       <div className={cx("addproduct__container")}>
         <div className={cx("addproduct__box")}>
+          {/* Title */}
           <div className={cx("addproduct__title")}>
             <h1>Nhập thông tin sản phẩm</h1>
           </div>
+          
+
+          
           {/* Nhap ten */}
           <div className={cx("input__product-Name")}>
             <label>Nhập tên {NameType}</label>
@@ -69,7 +73,7 @@ function AddProduct() {
           </div>
 
           {/* Them hinh anh */}
-          <div className={cx("input__product Image")}>
+          <div className={cx("input__product-upload Image")}>
             <label>Ảnh sản phẩm</label>
             <input type="file" onChange={handleFileChange} multiple />
             <input
@@ -82,7 +86,7 @@ function AddProduct() {
           </div>
 
           {/* Them file Design Data */}
-          <div className={cx("input__product DesignData")}>
+          <div className={cx("input__product-upload DesignData")}>
             <label>Design Data</label>
             <input type="file" onChange={handleFileChange} multiple />
             <input
@@ -95,8 +99,8 @@ function AddProduct() {
           </div>
 
           {/* Them Manufacturing */}
-          <div className={cx("input__product DesignData")}>
-            <label>Ảnh sản phẩm</label>
+          <div className={cx("input__product-upload DesignData")}>
+            <label>Manufacturing</label>
             <input type="file" onChange={handleFileChange} multiple />
             <input
               type="text"
@@ -108,7 +112,7 @@ function AddProduct() {
           </div>
 
           {/* Them file History */}
-          <div className={cx("input__product History")}>
+          <div className={cx("input__product-upload History")}>
             <label>Lịch sử sản xuất</label>
             <input type="file" onChange={handleFileChange} multiple />
             <input
@@ -121,7 +125,7 @@ function AddProduct() {
           </div>
 
           {/* Them file Guidelines */}
-          <div className={cx("input__product Guidelines")}>
+          <div className={cx("input__product-upload Guidelines")}>
             <label>Trouble shooting guidelines</label>
             <input type="file" onChange={handleFileChange} multiple />
             <input
