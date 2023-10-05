@@ -8,15 +8,16 @@ const fs = require('fs');
 // Cấu hình Multer để xử lý tải lên
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Thư mục trung gian để lưu tệp tạm thời
-    const tempUploadDir = 'temp_uploads/';
-
-    // Tạo thư mục trung gian nếu chưa tồn tại
-    if (!fs.existsSync(tempUploadDir)) {
-      fs.mkdirSync(tempUploadDir, { recursive: true });
-    }
-
-    cb(null, tempUploadDir);
+    // Lấy trường 'name' từ dữ liệu POST
+    const folderName = req.body.folderName;
+    const folderID = req.body.folderID;
+    const nameField = `${folderName}-${folderID}`;
+    // Lấy tên trường của file
+    const fieldname = file.fieldname;
+    // Tạo đường dẫn thư mục đích dựa trên 'name' và 'fieldname'
+    const uploadDir = `uploads/${nameField}/${fieldname}/`;
+    fs.mkdirSync(uploadDir, { recursive: true }); // Tạo thư mục đích nếu chưa tồn tại
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     // Đặt tên tệp bằng cách kết hợp tên tệp gốc và thời gian tải lên
@@ -30,6 +31,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Xử lý các đường dẫn
-router.post('/', upload.array('files'), uploadControllers.img);
+router.post('/', upload.fields([
+  { name: 'img'},
+  { name: 'design'},
+  { name: 'gerber'},
+  { name: 'bom'},
+  { name: 'assembly-guidelines'},
+  { name: 'testing-guidelines'},
+  { name: 'production-history'},
+  { name: 'trouble-shooting-guidelines'},
+]), uploadControllers.upload);
 
 module.exports = router; 

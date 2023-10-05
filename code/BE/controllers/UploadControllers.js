@@ -22,7 +22,7 @@ async function checkAndSave(folderName) {
 }
 
 class uploadControllers {
-  img(req, res) {
+  upload(req, res) {
     // Lấy tên thư mục từ trường dữ liệu 'folderName' trong yêu cầu
     const folderName = req.body.folderName;
 
@@ -31,23 +31,6 @@ class uploadControllers {
     if (!folderName) {
       return res.status(400).send("Tên thư mục không được để trống.");
     }
-
-    // Thư mục cuối cùng để lưu tệp tải lên
-    const finalUploadDir = path.join(uploadDir, folderName);
-
-    // Tạo thư mục cuối cùng nếu chưa tồn tại
-    if (!fs.existsSync(finalUploadDir)) {
-      fs.mkdirSync(finalUploadDir, { recursive: true });
-    }
-
-    // Di chuyển các tệp từ thư mục trung gian đến thư mục cuối cùng
-    const tempUploadDir = "temp_uploads/";
-    const files = fs.readdirSync(tempUploadDir);
-    files.forEach((file) => {
-      const sourcePath = path.join(tempUploadDir, file);
-      const destinationPath = path.join(finalUploadDir, file);
-      fs.renameSync(sourcePath, destinationPath);
-    });
 
     return res.status(200).send("Tải tệp lên và lưu vào thư mục thành công.");
   }
