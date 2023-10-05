@@ -9,15 +9,63 @@ const cx = classNames.bind(styles);
 function AddProduct() {
   const NameType = "mạch";
 
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedImgFiles, setSelectedImgFiles] = useState([]);
+  const [selectedDesDataFiles, setSelectedDesDataFiles] = useState([]);
+  const [selectedHistoryFiles, setSelectedHistoryFiles] = useState([]);
+  const [
+    selectedTroublerShootingGuidelineFiles,
+    setSelectedTroublerShootingGuidelineFiles,
+  ] = useState([]);
+  const [selectedGerberDataFiles, setSelectedGerberDataFiles] = useState([]);
+  const [selectedBOMFiles, setSelectedBOMFiles] = useState([]);
+  const [selectedAssemblyGuidelineFiles, setSelectedAssemblyGuidelineFiles] =
+    useState([]);
+  const [selectedTestingGuidelineFiles, setSelectedTestingGuidelineFiles] =
+    useState([]);
   const [folderName, setFolderName] = useState("");
   const [folderID, setFolderID] = useState("");
 
-  const handleFileChange = (e) => {
-    setSelectedFiles(e.target.files);
+  // Select Img file
+  const handleFileImgChange = (e) => {
+    setSelectedImgFiles(e.target.files);
   };
 
-  // GET NAME 
+  // Select Design-Data file
+  const handleFileDesDataChange = (e) => {
+    setSelectedDesDataFiles(e.target.files);
+  };
+
+  // Select Gerber-Data file
+  const handleFileGerberDataChange = (e) => {
+    setSelectedGerberDataFiles(e.target.files);
+  };
+
+  // Select BOM file
+  const handleFileBOMChange = (e) => {
+    setSelectedBOMFiles(e.target.files);
+  };
+
+  // Select Assembly-Guideline file
+  const handleFileAssemblyGuidelineChange = (e) => {
+    setSelectedAssemblyGuidelineFiles(e.target.files);
+  };
+
+  // Select Testing-Guideline file
+  const handleFileTestingGuidelineChange = (e) => {
+    setSelectedTestingGuidelineFiles(e.target.files);
+  };
+
+  // Select History file
+  const handleFileHistoryChange = (e) => {
+    setSelectedHistoryFiles(e.target.files);
+  };
+
+  // Select Guideline file
+  const handleFileGuidelineChange = (e) => {
+    setSelectedTroublerShootingGuidelineFiles(e.target.files);
+  };
+
+  // GET NAME
   const handleFolderNameChange = (e) => {
     setFolderName(e.target.value);
   };
@@ -28,35 +76,87 @@ function AddProduct() {
   };
 
   const handleUpload = async () => {
-    if (!folderName && !selectedFiles) {
-      alert("Vui lòng nhập tên thư mục.");
+    if (!folderName || !folderID) {
+      alert("Vui lòng nhập đầy đủ tên và mã sản phẩm.");
       return;
     }
 
+    // Dong goi du lieu tu INPUT
     const formData = new FormData();
     formData.append("folderName", folderName);
-    formData.append("folderID",folderID);
-
-    for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append("files", selectedFiles[i]);
+    formData.append("folderID", folderID);
+    // Add IMG file
+    for (let i = 0; i < selectedImgFiles.length; i++) {
+      formData.append("img", selectedImgFiles[i]);
+    }
+    // Add DesData file
+    for (let i = 0; i < selectedDesDataFiles.length; i++) {
+      formData.append("design", selectedDesDataFiles[i]);
+    }
+    // Add GerberData file
+    for (let i = 0; i < selectedGerberDataFiles.length; i++) {
+      formData.append("gerber", selectedGerberDataFiles[i]);
+    }
+    // Add BOMData file
+    for (let i = 0; i < selectedBOMFiles.length; i++) {
+      formData.append("bom", selectedBOMFiles[i]);
+    }
+    // Add AssemblyGuideline file
+    for (let i = 0; i < selectedAssemblyGuidelineFiles.length; i++) {
+      formData.append("assembly-guidelines", selectedAssemblyGuidelineFiles[i]);
+    }
+    // Add TestingGuideline file
+    for (let i = 0; i < selectedTestingGuidelineFiles.length; i++) {
+      formData.append("testing-guidelines", selectedTestingGuidelineFiles[i]);
+    }
+    // Add History file
+    for (let i = 0; i < selectedHistoryFiles.length; i++) {
+      formData.append("production-history", selectedHistoryFiles[i]);
+    }
+    // Add Guideline file
+    for (let i = 0; i < selectedTroublerShootingGuidelineFiles.length; i++) {
+      formData.append(
+        "trouble-shooting-guidelines",
+        selectedTroublerShootingGuidelineFiles[i]
+      );
     }
 
-    // Gui data cho BE
+    // Gui data -> BE
     try {
-      const response = await axios.post("/upload/img", formData, {
+      const response = await axios.post("/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data);
+      const uploadsuccess = document.querySelector(".UploadSuccessed");
+      uploadsuccess.classList.toggle("activeNotification");
+      setTimeout(() => {
+        uploadsuccess.classList.toggle("activeNotification");
+      }, 2000);
+      clearTimeout();
     } catch (error) {
-      console.error(error);
+      const uploadfail = document.querySelector(".UploadFailed");
+      uploadfail.classList.toggle("activeNotification");
+      setTimeout(() => {
+        uploadfail.classList.toggle("activeNotification");
+      }, 2000);
+      clearTimeout();
     }
   };
 
   return (
     <Fragment>
       <div className={cx("addproduct__container")}>
+        <div className={cx("UploadSuccessed Notification")}>
+          <span className={cx("Notification-Message")}>Thêm thành công</span>
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div className={cx("UploadFailed Notification")}>
+          <span className={cx("Notification-Message")}>Thêm thất bại</span>
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+
         <div className={cx("backtohomeBtn")}>
           <button>
             <Link
@@ -65,9 +165,10 @@ function AddProduct() {
                 textDecoration: "none",
                 color: "#000",
                 fontSize: "1.6rem",
+                padding: "10px",
               }}
             >
-              Quay lại
+              <i class="fa-solid fa-house"></i> Trang chủ
             </Link>
           </button>
         </div>
@@ -83,7 +184,7 @@ function AddProduct() {
             <div className={cx("input__product-Name")}>
               <label>Nhập tên {NameType}</label>
               <input
-                type="Name"
+                type="text"
                 name="Name"
                 placeholder={`Tên` + " " + NameType}
                 onChange={(e) => handleFolderNameChange(e)}
@@ -94,7 +195,7 @@ function AddProduct() {
             <div className={cx("input__product-ID")}>
               <label>Nhập mã {NameType}</label>
               <input
-                type="ID"
+                type="text"
                 name="ID"
                 placeholder={`Mã` + " " + NameType}
                 onChange={(e) => handleFolderIDChange(e)}
@@ -108,12 +209,9 @@ function AddProduct() {
             <input
               className={cx("selectFile")}
               type="file"
-              onChange={handleFileChange}
+              onChange={(e) => handleFileImgChange(e)}
               multiple
             />
-            <div className={cx("input__product-upload-folderName")}>
-              <button onClick={handleUpload}>Xác nhận</button>
-            </div>
           </div>
 
           {/* Them file Design Data */}
@@ -122,15 +220,60 @@ function AddProduct() {
             <input
               className={cx("selectFile")}
               type="file"
-              onChange={handleFileChange}
+              onChange={(e) => handleFileDesDataChange(e)}
               multiple
             />
-            <div className={cx("input__product-upload-folderName")}>
-              <button onClick={handleUpload}>Xác nhận</button>
-            </div>
           </div>
 
           {/* Them Manufacturing */}
+          <div className={cx("input__product-upload Manufacturing")}>
+            <span>Manufacturing</span>
+            <div className={cx("Manufacturing__Cards")}>
+              {/* Them Gerber Data */}
+              <div className={cx("input_product-upload-Card")}>
+                <label>Gerber data</label>
+                <input
+                  className={cx("selectFile")}
+                  type="file"
+                  onChange={(e) => handleFileGerberDataChange(e)}
+                  multiple
+                />
+              </div>
+
+              {/* Them BOM Data */}
+              <div className={cx("input_product-upload-Card")}>
+                <label>BOM data</label>
+                <input
+                  className={cx("selectFile")}
+                  type="file"
+                  onChange={(e) => handleFileBOMChange(e)}
+                  multiple
+                />
+              </div>
+
+              {/* Them Assembly guideline */}
+              <div className={cx("input_product-upload-Card")}>
+                <label>Assembly guidelines</label>
+                <input
+                  className={cx("selectFile")}
+                  type="file"
+                  onChange={(e) => handleFileAssemblyGuidelineChange(e)}
+                  multiple
+                />
+              </div>
+
+              {/* Them Testing guideline */}
+              <div className={cx("input_product-upload-Card")}>
+                <label>Testing guidelines</label>
+                <input
+                  className={cx("selectFile")}
+                  type="file"
+                  onChange={(e) => handleFileTestingGuidelineChange(e)}
+                  multiple
+                />
+              </div>
+            </div>
+          </div>
 
           {/* Them file History */}
           <div className={cx("input__product-upload History")}>
@@ -138,26 +281,26 @@ function AddProduct() {
             <input
               className={cx("selectFile")}
               type="file"
-              onChange={handleFileChange}
+              onChange={(e) => handleFileHistoryChange(e)}
               multiple
             />
-            <div className={cx("input__product-upload-folderName")}>
-              <button onClick={handleUpload}>Xác nhận</button>
-            </div>
           </div>
 
           {/* Them file Guidelines */}
-          <div className={cx("input__product-upload Guidelines")}>
-            <label>Guidelines</label>
+          <div
+            className={cx("input__product-upload TroubleShootingGuidelines")}
+          >
+            <label>Trouble Shooting Guidelines</label>
             <input
               className={cx("selectFile")}
               type="file"
-              onChange={handleFileChange}
+              onChange={(e) => handleFileGuidelineChange(e)}
               multiple
             />
-            <div className={cx("input__product-upload-folderName")}>
-              <button onClick={handleUpload}>Xác nhận</button>
-            </div>
+          </div>
+
+          <div className={cx("input__product-upload-folderName")}>
+            <button onClick={handleUpload}>Xác nhận thêm</button>
           </div>
         </div>
       </div>
