@@ -25,6 +25,8 @@ function AddProduct() {
   const [folderName, setFolderName] = useState("");
   const [folderID, setFolderID] = useState("");
 
+  //bug: check file type
+
   // Select Img file
   const handleFileImgChange = (e) => {
     setSelectedImgFiles(e.target.files);
@@ -122,26 +124,34 @@ function AddProduct() {
     }
 
     // Gui data -> BE
-    try {
-      const response = await axios.post("/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const uploadsuccess = document.querySelector(".UploadSuccessed");
-      uploadsuccess.classList.toggle("activeNotification");
-      setTimeout(() => {
-        uploadsuccess.classList.toggle("activeNotification");
-      }, 2000);
-      clearTimeout();
-    } catch (error) {
-      const uploadfail = document.querySelector(".UploadFailed");
-      uploadfail.classList.toggle("activeNotification");
-      setTimeout(() => {
+    await axios
+      .post("https://localhost:3000/upload", formData)
+      .then((response) => {
+        console.log(response.data);
+        if ((response.data.result = 1)) {
+          const uploadsuccess = document.querySelector(".UploadSuccessed");
+          uploadsuccess.classList.toggle("activeNotification");
+          setTimeout(() => {
+            uploadsuccess.classList.toggle("activeNotification");
+          }, 2000);
+          clearTimeout();
+        } else {
+          const uploadfail = document.querySelector(".UploadFailed");
+          uploadfail.classList.toggle("activeNotification");
+          setTimeout(() => {
+            uploadfail.classList.toggle("activeNotification");
+          }, 2000);
+          clearTimeout();
+        }
+      })
+      .catch((error) => {
+        const uploadfail = document.querySelector(".UploadFailed");
         uploadfail.classList.toggle("activeNotification");
-      }, 2000);
-      clearTimeout();
-    }
+        setTimeout(() => {
+          uploadfail.classList.toggle("activeNotification");
+        }, 2000);
+        clearTimeout();
+      });
   };
 
   return (
@@ -149,12 +159,12 @@ function AddProduct() {
       <div className={cx("addproduct__container")}>
         <div className={cx("UploadSuccessed Notification")}>
           <span className={cx("Notification-Message")}>Thêm thành công</span>
-          <i class="fa-solid fa-circle-check"></i>
+          <i className={cx("fa-solid fa-circle-check")}></i>
         </div>
 
         <div className={cx("UploadFailed Notification")}>
           <span className={cx("Notification-Message")}>Thêm thất bại</span>
-          <i class="fa-solid fa-circle-exclamation"></i>
+          <i className={cx("fa-solid fa-circle-exclamation")}></i>
         </div>
 
         <div className={cx("backtohomeBtn")}>
@@ -168,7 +178,7 @@ function AddProduct() {
                 padding: "10px",
               }}
             >
-              <i class="fa-solid fa-house"></i> Trang chủ
+              <i className={cx("fa-solid fa-house")}></i> Trang chủ
             </Link>
           </button>
         </div>
@@ -209,6 +219,7 @@ function AddProduct() {
             <input
               className={cx("selectFile")}
               type="file"
+              accept="image/*"
               onChange={(e) => handleFileImgChange(e)}
               multiple
             />
