@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3001;
+const cors = require('cors');
 const db = require("./config/database");
 const route = require("./routes/index");
 
+app.use(cors());
 app.use(express.json());
 
 // Kết nối với database
