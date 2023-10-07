@@ -1,6 +1,6 @@
 import "./AddProduct.scss";
 import Header from "../../components/GlobalStyle/Header/Header";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import styles from "./AddProduct.scss";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function AddProduct() {
-  const NameType = "mạch";
+  const NameType = "sản phẩm";
   const [selectedImgFiles, setSelectedImgFiles] = useState([]);
   const [selectedDesDataFiles, setSelectedDesDataFiles] = useState([]);
   const [selectedHistoryFiles, setSelectedHistoryFiles] = useState([]);
@@ -24,8 +24,6 @@ function AddProduct() {
     useState([]);
   const [folderName, setFolderName] = useState("");
   const [folderID, setFolderID] = useState("");
-
-  //bug: check file type
 
   // Select Img file
   const handleFileImgChange = (e) => {
@@ -79,7 +77,12 @@ function AddProduct() {
 
   const handleUpload = async () => {
     if (!folderName || !folderID) {
-      alert("Vui lòng nhập đầy đủ tên và mã sản phẩm.");
+      const uploadwarning = document.querySelector(".UploadWarning");
+      uploadwarning.classList.toggle("activeNotification");
+      setTimeout(() => {
+        uploadwarning.classList.toggle("activeNotification");
+      }, 2000);
+      clearTimeout();
       return;
     }
 
@@ -128,11 +131,19 @@ function AddProduct() {
       .post("http://localhost:3001/upload", formData)
       // Check status of call API
       .then((response) => {
-        if (response.data.result === 2) {
+        console.log(response.data.result);
+        if (response.data.result === 1) {
           const uploadsuccess = document.querySelector(".UploadSuccessed");
           uploadsuccess.classList.toggle("activeNotification");
           setTimeout(() => {
             uploadsuccess.classList.toggle("activeNotification");
+          }, 2000);
+          clearTimeout();
+        } else if (response.data.result === 2) {
+          const updatesuccess = document.querySelector(".UpdateSuccessed");
+          updatesuccess.classList.toggle("activeNotification");
+          setTimeout(() => {
+            updatesuccess.classList.toggle("activeNotification");
           }, 2000);
           clearTimeout();
         } else {
@@ -161,9 +172,16 @@ function AddProduct() {
       });
   };
 
-  const handleDeleteFileSelected = (e) => {
-    console.log(e.target);
-  };
+  // useEffect(() => {
+  //   const listInputHTMLCollection =
+  //     document.getElementsByClassName("selectFile");
+  //   const listInput = [...listInputHTMLCollection];
+  //   listInput.map((input) => {
+  //     for (let i = 0; i < input.files.length; i++) {
+  //       console.log(input.files[i].name);
+  //     }
+  //   });
+  // });
 
   return (
     <Fragment>
@@ -171,12 +189,22 @@ function AddProduct() {
       <div className={cx("addproduct__container")}>
         <div className={cx("UploadSuccessed Notification")}>
           <span className={cx("Notification-Message")}>Thêm thành công</span>
-          <i className={cx("fa-solid fa-circle-check")}></i>
+          <i className={cx("fa-solid fa-circle-check updateSuccessICO")}></i>
+        </div>
+
+        <div className={cx("UpdateSuccessed Notification")}>
+          <span className={cx("Notification-Message")}>Cập nhật thành công</span>
+          <i className={cx("fa-solid fa-circle-check updateSuccessICO")}></i>
         </div>
 
         <div className={cx("UploadFailed Notification")}>
-          <span className={cx("Notification-Message")}>Thêm thất bại</span>
-          <i className={cx("fa-solid fa-circle-exclamation")}></i>
+          <span className={cx("Notification-Message")}>Thêm ít nhất 1 file</span>
+          <i className={cx("fa-solid fa-circle-exclamation updateFailICO")}></i>
+        </div>
+
+        <div className={cx("UploadWarning Notification")}>
+          <span className={cx("Notification-Message")}>Thêm đầy đủ tên và mã sản phẩm</span>
+          <i className="fa-solid fa-triangle-exclamation updateWarningICO"></i>
         </div>
 
         <div className={cx("addproduct__box")}>
@@ -219,7 +247,6 @@ function AddProduct() {
               onChange={(e) => handleFileImgChange(e)}
               multiple
             />
-            <i className="fa-solid fa-trash-can" onClick={e => handleDeleteFileSelected(e)}></i>
           </div>
 
           {/* Them file Design Data */}

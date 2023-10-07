@@ -5,7 +5,7 @@
   --primary-background: #f8f8f8;
   --white-background: #fff;
   --primary-boxshadow: rgba(136, 140, 145, 0.534) 0px 2px 3px 0px;
-  --input-boxshadow: rgba(82, 226, 77, 0.819) 0px 0px 0px 1px inset, rgba(108, 226, 104, 0.2) 0px 0px 0px 1px;
+  --input-boxshadow: #4020FF 0px 0px 0px 1px inset, #e7e1ff 0px 0px 0px 1px;
   --submit-button: #46a5ff;
   --submit-buttonShadow: #6eb4f6 0px 3px 8px 0px;
   --submit-colorFont: #fff;
@@ -17,7 +17,9 @@
   --sucess-color: #01a31b;
   --fail-background: #ffdada;
   --fail-color: #d80000;
-
+  --warning-color: #8b6c2e;
+  --warning-background: #f8f4c3;
+  --notification-boxshadow: 0 3px 3px rgba(64, 64, 64, 0.16), 0 3px 6px rgba(0,0,0,0.23);
 
 }
 
