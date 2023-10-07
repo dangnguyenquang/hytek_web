@@ -24,7 +24,7 @@ function Header() {
             }}
             to="/addproduct"
           >
-            <i class="fa-solid fa-folder-plus"></i>
+            <i className="fa-solid fa-folder-plus"></i>
             <span>Thêm sản phẩm</span>
           </Link>
         </div>

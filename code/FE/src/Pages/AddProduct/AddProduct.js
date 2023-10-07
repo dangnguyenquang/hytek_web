@@ -9,7 +9,6 @@ const cx = classNames.bind(styles);
 
 function AddProduct() {
   const NameType = "mạch";
-
   const [selectedImgFiles, setSelectedImgFiles] = useState([]);
   const [selectedDesDataFiles, setSelectedDesDataFiles] = useState([]);
   const [selectedHistoryFiles, setSelectedHistoryFiles] = useState([]);
@@ -126,10 +125,10 @@ function AddProduct() {
 
     // Gui data -> BE
     await axios
-      .post("http://localhost:3000/upload", formData)
+      .post("http://localhost:3001/upload", formData)
       // Check status of call API
       .then((response) => {
-        if ((response.data.result = 1)) {
+        if (response.data.result === 2) {
           const uploadsuccess = document.querySelector(".UploadSuccessed");
           uploadsuccess.classList.toggle("activeNotification");
           setTimeout(() => {
@@ -144,6 +143,12 @@ function AddProduct() {
           }, 2000);
           clearTimeout();
         }
+
+        // Xoa input sau khi submit
+        let inputFileBtn = document.getElementsByClassName("selectFile");
+        for (let i = 0; i < inputFileBtn.length; i++) {
+          inputFileBtn[i].value = "";
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -156,9 +161,13 @@ function AddProduct() {
       });
   };
 
+  const handleDeleteFileSelected = (e) => {
+    console.log(e.target);
+  };
+
   return (
     <Fragment>
-      <Header/>
+      <Header />
       <div className={cx("addproduct__container")}>
         <div className={cx("UploadSuccessed Notification")}>
           <span className={cx("Notification-Message")}>Thêm thành công</span>
@@ -169,22 +178,6 @@ function AddProduct() {
           <span className={cx("Notification-Message")}>Thêm thất bại</span>
           <i className={cx("fa-solid fa-circle-exclamation")}></i>
         </div>
-
-        {/* <div className={cx("backtohomeBtn")}>
-          <button>
-            <Link
-              to="/"
-              style={{
-                textDecoration: "none",
-                color: "#000",
-                fontSize: "1.6rem",
-                padding: "10px",
-              }}
-            >
-              <i className={cx("fa-solid fa-house")}></i> Trang chủ
-            </Link>
-          </button>
-        </div> */}
 
         <div className={cx("addproduct__box")}>
           {/* Title */}
@@ -226,6 +219,7 @@ function AddProduct() {
               onChange={(e) => handleFileImgChange(e)}
               multiple
             />
+            <i className="fa-solid fa-trash-can" onClick={e => handleDeleteFileSelected(e)}></i>
           </div>
 
           {/* Them file Design Data */}

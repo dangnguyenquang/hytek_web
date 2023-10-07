@@ -198,7 +198,7 @@
 }
 
 .UploadSuccessed, .UploadFailed { 
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 10px;
   background: var(--white-background);
@@ -249,4 +249,13 @@
       transform: translateX(0px);
     }
   }
+}
+
+.fa-trash-can { 
+  position: absolute;
+  right: 10px;
+  top: 30px;
+  cursor: pointer;
+  color: var(--fail-color);
+  font-size: 1.8rem;
 }
