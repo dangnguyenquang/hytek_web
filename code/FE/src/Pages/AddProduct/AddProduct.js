@@ -1,4 +1,5 @@
 import "./AddProduct.scss";
+import Header from "../../components/GlobalStyle/Header/Header";
 import { Fragment, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
@@ -125,9 +126,9 @@ function AddProduct() {
 
     // Gui data -> BE
     await axios
-      .post("https://localhost:3000/upload", formData)
+      .post("http://localhost:3000/upload", formData)
+      // Check status of call API
       .then((response) => {
-        console.log(response.data);
         if ((response.data.result = 1)) {
           const uploadsuccess = document.querySelector(".UploadSuccessed");
           uploadsuccess.classList.toggle("activeNotification");
@@ -145,6 +146,7 @@ function AddProduct() {
         }
       })
       .catch((error) => {
+        console.log(error);
         const uploadfail = document.querySelector(".UploadFailed");
         uploadfail.classList.toggle("activeNotification");
         setTimeout(() => {
@@ -156,6 +158,7 @@ function AddProduct() {
 
   return (
     <Fragment>
+      <Header/>
       <div className={cx("addproduct__container")}>
         <div className={cx("UploadSuccessed Notification")}>
           <span className={cx("Notification-Message")}>Thêm thành công</span>
@@ -167,7 +170,7 @@ function AddProduct() {
           <i className={cx("fa-solid fa-circle-exclamation")}></i>
         </div>
 
-        <div className={cx("backtohomeBtn")}>
+        {/* <div className={cx("backtohomeBtn")}>
           <button>
             <Link
               to="/"
@@ -181,7 +184,7 @@ function AddProduct() {
               <i className={cx("fa-solid fa-house")}></i> Trang chủ
             </Link>
           </button>
-        </div>
+        </div> */}
 
         <div className={cx("addproduct__box")}>
           {/* Title */}

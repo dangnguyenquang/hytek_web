@@ -1,12 +1,9 @@
-.addproduct__container { 
-  width: 100vw;
-  height: 100vh;
+.addproduct__container {
+  margin: 30px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary-background);
-  background: #001c40;
-  filter: blur(5);
+  width: 100%;
   position: relative;
 }
 
@@ -35,12 +32,13 @@
   box-shadow: var(--primary-boxshadow);
   border-radius: 8px;
   min-height: 450px;
-  min-width: 700px;
+  min-width: 600px;
+  width: 70%;
 
   & > div:not(:last-child) { 
     border-bottom: solid 1px var(--primary-boderColor);
-    margin-bottom: 5px;
-    padding: 15px 0 8px 0;
+    margin: 10px 0;
+    padding: 25px 0 10px 0;
   }
 
   & > div:first-child { 
@@ -63,7 +61,7 @@
 
 .input__product-Name, .input__product-ID {
   position: relative;
-  padding-top: 15px;
+  padding-top: 20px;
 
   & label {
     margin-right: 10px;
@@ -95,7 +93,6 @@
 }
 
 .input__product-upload {
-  padding-top: 25px;
   display: block;
   position: relative;
 
@@ -184,7 +181,7 @@
 .Manufacturing__Cards { 
   display: grid;
   grid-template-columns: 50% 50%;
-  row-gap: 10px;
+  row-gap: 40px;
   margin-top: 20px;
 }
 

@@ -1,0 +1,47 @@
+.HeaderGlobal {
+  background-color: var(--white-background);
+  z-index: 1;
+  height: 60px;
+  box-shadow: var(--primary-boxshadow);
+  display: flex;
+  align-items: center;
+}
+
+.Header__Logo  { 
+  width: fit-content;
+  margin-left: 30px;
+  & img {
+    width: 180px;
+    height: 50px;
+  }
+}
+
+.spacebetween__Logo-Nav { 
+  flex: 1;
+}
+
+.Header__Navigation {
+  min-width: 350px;
+  display: flex;
+  align-items: center;
+}
+
+.NavigationBtn {
+  margin: 0 5px;
+
+  & > a { 
+    padding: 10px;
+    border-radius: 4px;
+    &:hover { 
+      background: var(--label-backgroundColor);
+    }
+  }
+
+  & span { 
+    margin-left: 10px;
+  }
+
+  & span, i { 
+    color: #1e3050;
+  }
+}

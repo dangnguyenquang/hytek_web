@@ -4,7 +4,7 @@
 :root { 
   --primary-background: #f8f8f8;
   --white-background: #fff;
-  --primary-boxshadow: rgba(11, 108, 254, 0.534) 0px 7px 29px 0px;
+  --primary-boxshadow: rgba(136, 140, 145, 0.534) 0px 2px 3px 0px;
   --input-boxshadow: rgba(82, 226, 77, 0.819) 0px 0px 0px 1px inset, rgba(108, 226, 104, 0.2) 0px 0px 0px 1px;
   --submit-button: #46a5ff;
   --submit-buttonShadow: #6eb4f6 0px 3px 8px 0px;
@@ -29,12 +29,25 @@
 }
 
 html {
-  width: 100vw;
-  height: 100vh;
+
   font-size: 62.5%;
 }
 
 body { 
   font-family: 'Montserrat', sans-serif;
   font-size: 1.6rem;
+  background: var(--primary-background);
+}
+
+::-webkit-scrollbar { 
+  width: 8px;
+}
+
+::-webkit-scrollbar-track { 
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#9198e5, #4020FF);
+  border-radius: 4px;
 }
