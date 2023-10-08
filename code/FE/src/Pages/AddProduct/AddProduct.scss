@@ -32,7 +32,7 @@
   box-shadow: var(--primary-boxshadow);
   border-radius: 8px;
   min-height: 450px;
-  min-width: 600px;
+  min-width: 680px;
   width: 70%;
 
   & > div:not(:last-child) { 
@@ -52,6 +52,10 @@
   cursor: pointer;
   margin-bottom: 20px !important;
   color: #051336;
+  
+  & > h1 { 
+    font-weight: 600;
+  }
 }
 
 .input__product-Name-Id { 
@@ -79,8 +83,8 @@
     padding: 8px;
     border: solid 2px #E2E8F0;
     border-radius: 8px;
+    color: #051336 !important;
     font-size: 1.6rem;
-    font-weight: 100;
     outline: none;
     width: 90%;
     &:focus { 
@@ -123,7 +127,8 @@
   cursor: pointer;
   opacity: .8;
   margin-left: 20px;
-
+  width: 300px;
+  font-size: 1.4rem;
   &:hover { 
     opacity: 1;
   }
@@ -135,7 +140,6 @@
     border-radius: 4px;
     padding: 5px;
   }
-
 }
 
 .input__product-upload-folderName {

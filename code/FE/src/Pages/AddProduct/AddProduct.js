@@ -131,7 +131,6 @@ function AddProduct() {
       .post("http://localhost:3001/upload", formData)
       // Check status of call API
       .then((response) => {
-        console.log(response.data.result);
         if (response.data.result === 1) {
           const uploadsuccess = document.querySelector(".UploadSuccessed");
           uploadsuccess.classList.toggle("activeNotification");

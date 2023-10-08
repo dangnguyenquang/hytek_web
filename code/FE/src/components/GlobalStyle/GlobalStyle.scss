@@ -17,10 +17,9 @@
   --sucess-color: #01a31b;
   --fail-background: #ffdada;
   --fail-color: #d80000;
-  --warning-color: #8b6c2e;
+  --warning-color: rgb(175, 175, 0);
   --warning-background: #f8f4c3;
   --notification-boxshadow: 0 3px 3px rgba(64, 64, 64, 0.16), 0 3px 6px rgba(0,0,0,0.23);
-
 }
 
 * { 
@@ -31,14 +30,14 @@
 }
 
 html {
-
-  font-size: 62.5%;
+  font-size: 62.5% !important;
 }
 
 body { 
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.6rem;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.6rem !important;
   background: var(--primary-background);
+  overflow-x: hidden
 }
 
 ::-webkit-scrollbar { 

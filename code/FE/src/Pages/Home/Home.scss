@@ -1,0 +1,61 @@
+.showproduct__container { 
+  width: 100%;
+  position: relative;
+  min-width: 600px;
+}
+
+.showproduct__container-searchbar { 
+  width: 70%;
+  margin: auto;
+  padding: 20px 0;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & input {
+    border: solid 2px var(--primary-boderColor);
+    outline: none;
+    width: 60%;
+    min-width: 500px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1.6rem;
+    box-shadow: var(--primary-boxshadow);
+  }
+}
+
+.showproduct__container-listItem { 
+  width: 70%;
+  min-width: 600px;
+  margin: auto;
+}
+
+.listItem__BoxCards { 
+  width: 100%;
+}
+
+.listItem__BoxCards-Card {
+  margin: 10px 0;
+  background-color: #ccc;
+  background: var(--white-background);
+  box-shadow: var(--primary-boxshadow);
+  border-radius: 8px;
+  display: flex;
+}
+
+.Card__Img {
+  width: 100%;
+  min-width: 250px;
+  max-width: 300px;
+  height: 100%;
+  min-height: 400px;
+  max-height: 400px;
+  background: #ccc;
+}
+
+.Card__Data { 
+  width: 100%;
+  min-width: 400px;
+}
+
