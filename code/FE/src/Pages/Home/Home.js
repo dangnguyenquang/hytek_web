@@ -5,6 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 import Header from "../../components/GlobalStyle/Header/Header";
 import classNames from "classnames";
 import styles from "./Home.scss";
+import logo from '../../assets/hyteklogo.png'
 
 const cx = classNames.bind(styles);
 
@@ -25,8 +26,8 @@ function Home() {
           <div className={cx("listItem__BoxCards")}>
             <div className={cx("listItem__BoxCards-Card")}>
               <div className={cx("Card__Img")}>
-                <img />
-                <img />
+                <img src={logo}/>
+                <span>Mo ta anh</span>
               </div>
 
 
