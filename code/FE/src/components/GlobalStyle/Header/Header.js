@@ -9,7 +9,9 @@ function Header() {
   return (
     <div className={cx("HeaderGlobal")}>
       <div className={cx("Header__Logo")}>
-        <img src={logo} />
+        <Link to='/'>
+          <img src={logo} />
+        </Link>
       </div>
       <div className={cx("spacebetween__Logo-Nav")}></div>
       <div className={cx("Header__Navigation")}>

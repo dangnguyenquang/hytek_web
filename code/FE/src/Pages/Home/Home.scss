@@ -2,6 +2,7 @@
   width: 100%;
   position: relative;
   min-width: 600px;
+  margin-bottom: 50px;
 }
 
 .showproduct__container-searchbar { 
@@ -31,44 +32,58 @@
   margin: auto;
 }
 
-.listItem__BoxCards { 
-  width: 100%;
-}
-
-.listItem__BoxCards-Card {
-  margin: 10px 0;
-  background-color: #ccc;
+.showproduct__table-body { 
   background: var(--white-background);
   box-shadow: var(--primary-boxshadow);
+  padding: 15px;
+  width: 100%;
   border-radius: 8px;
-  display: flex;
-  padding: 5px;
 }
 
-.Card__Img {
+.showproduct__table-body-cards { 
   width: 100%;
-  min-width: 250px;
-  max-width: 300px;
-  height: 100%;
-  min-height: 400px;
-  max-height: 460px;
-  background: #ccc;
-  border-radius: 8px;
-  margin-right: 10px;
+}
 
-  & img { 
-    width: 100%;
-    min-width: 250px;
-    max-width: 300px;
-    height: 100%;
-    min-height: 400px;
-    max-height: 400px;
-    border-radius: 8px;
+.table-body-card-header {
+  & tr { 
+    background-color: var(--label-backgroundColor);
+  }
+
+  & th { 
+    padding: 5px;
+    color: var(--boldfont-color);
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: default;
+    text-align: center;
+
+    &:first-child { 
+      border-top-left-radius: 8px;
+   }
+
+    &:last-child { 
+    border-top-right-radius: 8px;
+    }
   }
 }
 
-.Card__Data { 
+.table-body-card-body { 
   width: 100%;
-  min-width: 400px;
+
+  & tr { 
+    &:hover { 
+      background-color: var(--sucess-bacground);
+    }
+  }
+
+  & td { 
+    padding: 5px;
+    cursor: pointer;
+    &:first-child {
+      text-align: center;
+    }
+    border: solid 1px #ccc;
+  } 
+
 }
 

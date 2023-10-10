@@ -1,179 +1,87 @@
 import "./Home.scss";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Moment from "react-moment";
+import "moment-timezone";
 import Header from "../../components/GlobalStyle/Header/Header";
 import classNames from "classnames";
 import styles from "./Home.scss";
-import logo from '../../assets/hyteklogo.png'
+import logo from "../../assets/hyteklogo.png";
+import moment from "moment-timezone";
 
 const cx = classNames.bind(styles);
 
 function Home() {
+  const [listFolder, setListFolder] = useState([]);
+
   // Call API lay du lieu trong Database
+  useEffect(() => {
+    async function getData() {
+      await axios
+        .get("http://localhost:3001/show")
+        .then((response) => {
+          setListFolder(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    getData();
+  }, []);
+
+  // Xu ly chuyen trang ProductDetail
+  const navigate = useNavigate();
+  const handleLinktoProductDetail = (folderName) => {
+    navigate("/product/" + folderName);
+  };
 
   return (
     <Fragment>
       <Header />
       <div className={cx("showproduct__container")}>
-
         <div className={cx("showproduct__container-searchbar")}>
           <input type="text" placeholder="Nhập tên hoặc mã sản phẩm" />
         </div>
 
-
         <div className={cx("showproduct__container-listItem")}>
-          <div className={cx("listItem__BoxCards")}>
-            <div className={cx("listItem__BoxCards-Card")}>
-              <div className={cx("Card__Img")}>
-                <img src={logo}/>
-                <span>Mo ta anh</span>
-              </div>
+          <div className={cx("showproduct__container-listItem-table")}>
+            <section className={cx("showproduct__table-header")}>
+              <h1>Danh sách sản phẩm</h1>
+            </section>
+            <section className={cx("showproduct__table-body")}>
+              <table className={cx("showproduct__table-body-cards")}>
+                <thead className={cx("table-body-card-header")}>
+                  <tr>
+                    <th>STT</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Mã Sản Phẩm</th>
+                    <th>Ngày tạo</th>
+                  </tr>
+                </thead>
 
-
-              <div className={cx("Card__Data")}>
-                {/* CardTitle */}
-                <div className={cx("Card__Data-File CardTitle")}>
-                  <span>Ten San Pham</span>
-                  <span>Ma San Pham</span>
-                </div>
-
-                {/* CardDesignData */}
-                <div className={cx("Card__Data-File CardDesignData")}>
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse1"
-                      aria-expanded="true"
-                      aria-controls="collapse1"
-                    >
-                      Design Data
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse1">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-
-                {/* CardGerberData */}
-                <div className={cx("Card__Data-File CardGerberData")}>
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse2"
-                      aria-expanded="true"
-                      aria-controls="collapse2"
-                    >
-                      Gerber Data
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse2">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-
-                {/* CardBOMData */}
-                <div className={cx("Card__Data-File CardBOMData")}>
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse3"
-                      aria-expanded="true"
-                      aria-controls="collapse3"
-                    >
-                      BOM Data
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse3">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-
-                {/* CardAssemblyGuideline */}
-                <div className={cx("Card__Data-File CardAssemblyGuideline")}>
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse4"
-                      aria-expanded="true"
-                      aria-controls="collapse4"
-                    >
-                      Assembly Guideline
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse4">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-
-                {/* CardTestingGuideline */}
-                <div className={cx("Card__Data-File CardTestingGuideline")}>
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse6"
-                      aria-expanded="true"
-                      aria-controls="collapse6"
-                    >
-                      Testing Guideline
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse6">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-
-                {/* CardHistory */}
-                <div className={cx("Card__Data-File CardHistory")}>
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse7"
-                      aria-expanded="true"
-                      aria-controls="collapse7"
-                    >
-                      Lịch sử sản xuất
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse7">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-                
-                {/* CardTroubleShootingGuideline */}
-                <div
-                  className={cx("Card__Data-File CardTroubleShootingGuideline")}
-                >
-                  <p className="d-inline-flex gap-1 ConditionBtn">
-                    <button
-                      className="btn btn-primary collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse8"
-                      aria-expanded="true"
-                      aria-controls="collapse8"
-                    >
-                      Trouble Shooting Guideline
-                    </button>
-                  </p>
-                  <div className="collapse ListCondition" id="collapse8">
-                    <div className="card card-body Conditions"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <tbody className={cx("table-body-card-body")}>
+                  {listFolder.map((folder, index) => {
+                    const createAt = moment(folder.createAt)
+                      .tz("Asia/Ho_Chi_Minh")
+                      .format("DD/MM/YYYY");
+                    return (
+                      <tr
+                        key={"product" + index}
+                        onClick={() =>
+                          handleLinktoProductDetail(folder.folderName)
+                        }
+                      >
+                        <td> {index} </td>
+                        <td> {folder.name} </td>
+                        <td> {folder.id} </td>
+                        <td>{createAt}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </section>
           </div>
         </div>
       </div>

@@ -10,7 +10,6 @@ function App() {
             const Page = route.component;
             return <Route key={'route' + index} path={route.path} element={<Page/>} />
           })}
-          
         </Routes>
       </div>
     </Router>
