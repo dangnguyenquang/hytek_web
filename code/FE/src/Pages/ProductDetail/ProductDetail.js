@@ -8,8 +8,7 @@ const cx = classNames.bind(styles);
 
 function ProductDetail() {
   const { folderName } = useParams();
-
-  // Call API get data
+  // Call API get data by folderName
 
   return (
     <>
@@ -19,9 +18,9 @@ function ProductDetail() {
       </div>
       <div>
         <div className={cx("Condition-Item")}>
-          <p class="d-inline-flex gap-1 ConditionBtn">
+          <p className={cx("d-inline-flex gap-1 ConditionBtn")}>
             <button
-              class="btn btn-primary collapsed"
+              className={cx("btn btn-primary collapsed")}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapse2"
@@ -31,9 +30,8 @@ function ProductDetail() {
               Design Data
             </button>
           </p>
-          <div class="collapse show ListCondition" id="collapse2">
-            <div class="card card-body Conditions">
-            </div>
+          <div className={cx("collapse show ListCondition")} id="collapse2">
+            <div className={cx("card card-body Conditions")}></div>
           </div>
         </div>
       </div>

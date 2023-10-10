@@ -36,6 +36,27 @@ function Home() {
     navigate("/product/" + folderName);
   };
 
+  useEffect(() => {
+    async function checkInputCondition() {
+      const searchInput = document.querySelector(
+        ".showproduct__container-searchbar input"
+      );
+      searchInput.addEventListener("input", (e) => {
+        // .replace(/[^a-zA-Z ]/g, "")
+        let txtSearch = e.target.value.toLowerCase();
+        const listProductDOM = document.querySelectorAll(".Product-Item");
+        listProductDOM.forEach((item) => {
+          if (item.innerText.toLowerCase().includes(txtSearch)) {
+            item.classList.remove("product-item-Hide");
+          } else {
+            item.classList.add("product-item-Hide");
+          }
+        });
+      });
+    }
+    checkInputCondition();
+  }, []);
+
   return (
     <Fragment>
       <Header />
@@ -71,6 +92,7 @@ function Home() {
                         onClick={() =>
                           handleLinktoProductDetail(folder.folderName)
                         }
+                        className={cx("Product-Item")}
                       >
                         <td> {index} </td>
                         <td> {folder.name} </td>
