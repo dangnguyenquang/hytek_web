@@ -46,7 +46,16 @@ class showControllers {
     try {
       const subfolders = await fs.promises.readdir(uploadDir);
   
-      const folderData = {};
+      const folderData = {
+        img: [],
+        design: [],
+        gerber: [],
+        bom: [],
+        "assembly-guidelines": [],
+        "testing-guidelines": [],
+        "production-history": [],
+        "trouble-shooting-guidelines": [],
+      };
   
       await Promise.all(
         subfolders.map(async (folder) => {
