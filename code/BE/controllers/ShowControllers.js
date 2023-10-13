@@ -76,6 +76,20 @@ class showControllers {
     }
   }
 
+  download (req, res) {
+    const folderName = req.params.folderName;
+    const path = req.params.path;
+    const fileName = req.params.fileName;
+    const filePath = path.join(__dirname, `../uploads/${folderName}/${path}/${fileName}`);
+    res.download(filePath);
+  }
+
+  renderIMG (req, res) {
+    const folderName = req.params.folderName; 
+    const fileName = req.params.fileName;
+    const imagePath = path.join(__dirname, `../uploads/${folderName}/img/${fileName}`);
+    res.sendFile(imagePath);
+  }
 }
 
 module.exports = new showControllers();
