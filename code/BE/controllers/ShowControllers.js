@@ -78,9 +78,9 @@ class showControllers {
 
   download (req, res) {
     const folderName = req.params.folderName;
-    const path = req.params.path;
+    const downloadPath  = req.params.downloadPath ;
     const fileName = req.params.fileName;
-    const filePath = path.join(__dirname, `../uploads/${folderName}/${path}/${fileName}`);
+    const filePath = path.join(__dirname, `../uploads/${folderName}/${downloadPath}/${fileName}`);
     res.download(filePath);
   }
 
