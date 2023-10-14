@@ -38,6 +38,7 @@
   padding: 15px;
   width: 100%;
   border-radius: 8px;
+  min-height: 240px;
 }
 
 .showproduct__table-body-cards { 
@@ -69,19 +70,17 @@
 
 .table-body-card-body { 
   width: 100%;
-
+  
   & tr { 
     &:hover { 
       background-color: var(--sucess-bacground);
     }
   }
 
-  & td { 
+  & td {
     padding: 5px;
     cursor: pointer;
-    &:first-child {
-      text-align: center;
-    }
+    text-align: center ;
     border: solid 1px #ccc;
   }
 }

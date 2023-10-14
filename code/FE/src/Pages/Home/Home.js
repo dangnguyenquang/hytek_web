@@ -33,7 +33,8 @@ function Home() {
   // Xu ly chuyen trang ProductDetail
   const navigate = useNavigate();
   const handleLinktoProductDetail = (folderName) => {
-    navigate("/product/" + folderName);
+    let formatPath = folderName.replace('/', "%2F")
+    navigate("/product/" + formatPath);
   };
 
   useEffect(() => {
@@ -77,12 +78,13 @@ function Home() {
                     <th>STT</th>
                     <th>Tên Sản Phẩm</th>
                     <th>Mã Sản Phẩm</th>
-                    <th>Ngày tạo</th>
+                    <th>Ngày Tạo</th>
                   </tr>
                 </thead>
 
                 <tbody className={cx("table-body-card-body")}>
-                  {listFolder.map((folder, index) => {
+                  {
+                  listFolder.map((folder, index) => {
                     const createAt = moment(folder.createAt)
                       .tz("Asia/Ho_Chi_Minh")
                       .format("DD/MM/YYYY");
@@ -94,7 +96,7 @@ function Home() {
                         }
                         className={cx("Product-Item")}
                       >
-                        <td> {index} </td>
+                        <td> {index + 1} </td>
                         <td> {folder.name} </td>
                         <td> {folder.id} </td>
                         <td>{createAt}</td>
