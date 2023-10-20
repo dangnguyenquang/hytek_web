@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function AddProduct() {
-  const NameType = "sản phẩm";
+  const NameType = "linh kiện";
   const [selectedImgFiles, setSelectedImgFiles] = useState([]);
   const [selectedDesDataFiles, setSelectedDesDataFiles] = useState([]);
   const [selectedHistoryFiles, setSelectedHistoryFiles] = useState([]);
@@ -202,14 +202,14 @@ function AddProduct() {
         </div>
 
         <div className={cx("UploadWarning Notification")}>
-          <span className={cx("Notification-Message")}>Thêm đầy đủ tên và mã sản phẩm</span>
+          <span className={cx("Notification-Message")}>Thêm đầy đủ tên và mã linh kiện</span>
           <i className="fa-solid fa-triangle-exclamation updateWarningICO"></i>
         </div>
 
         <div className={cx("addproduct__box")}>
           {/* Title */}
           <div className={cx("addproduct__title")}>
-            <h1>Nhập thông tin sản phẩm</h1>
+            <h1>Nhập thông tin linh kiện</h1>
           </div>
 
           <div className={cx("input__product-Name-Id")}>
@@ -238,7 +238,7 @@ function AddProduct() {
 
           {/* Them hinh anh */}
           <div className={cx("input__product-upload Image")}>
-            <label>Ảnh sản phẩm</label>
+            <label>Ảnh linh kiện</label>
             <input
               className={cx("selectFile")}
               type="file"

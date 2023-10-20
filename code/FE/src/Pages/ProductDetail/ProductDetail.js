@@ -25,7 +25,6 @@ function ProductDetail() {
   const [troubleShootingGuidelines, setTroubleShootingGuidelines] = useState(
     []
   );
-  const [imageURL, setImageURL] = useState([]);
 
   // Call API get data by folderName
   useEffect(() => {
@@ -33,6 +32,7 @@ function ProductDetail() {
       .get("http://localhost:3001/show/detail?folderName=" + folderName)
       .then((response) => {
         const folderData = response.data;
+        console.log(folderData);
         setProductImg(folderData.img);
         setDesignData(folderData.design);
         setGerberData(folderData.gerber);
@@ -90,14 +90,21 @@ function ProductDetail() {
             <div className={cx("productdetail__card-info-Img")}>
               <div
                 id="carouselExampleAutoplaying"
-                className="carousel slide"
+                className="carousel slide productdetail__card-info-Img-card"
                 data-bs-ride="carousel"
               >
-                <div className="carousel-inner">
+                <div className="carousel-inner productdetail__card-info-Img-list">
                   {productImg.length > 0 &&
                     productImg.map((item, index) => {
                       return (
-                        <div className="carousel-item active" key={'carousel-item' + index}>
+                        <div
+                          className={
+                            index === 0
+                              ? "productdetailImg carousel-item active"
+                              : "productdetailImg carousel-item"
+                          }
+                          key={"carousel-item" + index}
+                        >
                           <RenderImg
                             folderName={folderName}
                             productImgNameList={item}
@@ -132,14 +139,56 @@ function ProductDetail() {
                 </button>
               </div>
             </div>
-            <div className={cx("productdetail__card-info-Title")}>
-              <span className={"productdetail__card--info-Title-Name"}></span>
-              <span className={"productdetail__card--info-Title-ID"}></span>
+            <div className={cx("productdetail-edit")}>
+              <button className={cx('productdetail-edit-delete')}>
+                <span>Xóa tệp</span>
+                <span>
+                  <i className="fa-solid fa-trash"></i>
+                </span>
+              </button>
+              <button className={cx('productdetail-edit-add')}>
+                <span>Thêm tệp</span>
+                <span>
+                  <i class="fa-solid fa-folder-plus"></i>
+                </span>
+              </button>
+            </div>
+            <div className={cx("productdetail-downloadAll")}>
+              <button>
+                <span>Tải tất cả .rar</span>
+                <span>
+                  <i class="fa-solid fa-download"></i>
+                </span>
+              </button>
             </div>
           </div>
 
           <div className={cx("productdetail__card-Data")}>
+            <div className={cx("productdetail__card-info-Title")}>
+              <h1>{folderName}</h1>
+            </div>
+
+            <div className={cx("productdetail__card-info")}>
+              <div className={"productdetail__card--info-Name"}>
+                <span>
+                  Tên linh kiện: {folderName.slice(0, folderName.indexOf("-"))}
+                </span>
+              </div>
+              <div className={"productdetail__card--info-ID"}>
+                <span>
+                  Mã linh kiện:{" "}
+                  {folderName.replace(
+                    folderName.slice(0, folderName.indexOf("-") + 1),
+                    ""
+                  )}
+                </span>
+              </div>
+            </div>
+
             <div className={cx("productdetail__card-Data-ListData")}>
+              <h1>Các tệp lưu trữ</h1>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -152,7 +201,6 @@ function ProductDetail() {
                   >
                     Design Data
                   </button>
-                  <i className="fa-solid fa-chevron-down"></i>
                 </p>
                 <div className={cx("collapse listDataFile")} id="collapse1">
                   <div className={cx("card card-body DataFile")}>
@@ -162,7 +210,7 @@ function ProductDetail() {
                           <tr>
                             <th>STT</th>
                             <th>Tên File</th>
-                            <th>Kiểu File</th>
+                            <th>Kiểu</th>
                             <th>Ngày Tạo</th>
                           </tr>
                         </thead>
@@ -185,7 +233,7 @@ function ProductDetail() {
                               >
                                 <td>{index + 1}</td>
                                 <td>{name}</td>
-                                <td>{type}</td>
+                                <td>{"." + type}</td>
                                 <td>{time}</td>
                               </tr>
                             );
@@ -196,6 +244,8 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -209,11 +259,50 @@ function ProductDetail() {
                     Gerber Data
                   </button>
                 </p>
-                <i className="fa-solid fa-chevron-down"></i>
                 <div className={cx("collapse listDataFile")} id="collapse2">
-                  <div className={cx("card card-body DataFile")}></div>
+                  <div className={cx("card card-body DataFile")}>
+                    <section className={cx("DataFile__Table-body")}>
+                      <table className={cx("DataFile__Table-body-card")}>
+                        <thead className={cx("Table-body-card-header")}>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên File</th>
+                            <th>Kiểu</th>
+                            <th>Ngày Tạo</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className={cx("Table-body-card-body")}>
+                          {gerberData.map((file, index) => {
+                            const name = formatFileName(file);
+                            const type = formatFileType(file);
+                            const time = formatFileTime(file);
+                            return (
+                              <tr
+                                key={"DesignData-Item-" + index}
+                                onClick={() => {
+                                  handleDownloadFile(
+                                    folderName,
+                                    "design",
+                                    file
+                                  );
+                                }}
+                              >
+                                <td>{index + 1}</td>
+                                <td>{name}</td>
+                                <td>{"." + type}</td>
+                                <td>{time}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
                 </div>
               </div>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -227,11 +316,50 @@ function ProductDetail() {
                     BOM Data
                   </button>
                 </p>
-                <i className="fa-solid fa-chevron-down"></i>
                 <div className={cx("collapse listDataFile")} id="collapse3">
-                  <div className={cx("card card-body DataFile")}></div>
+                  <div className={cx("card card-body DataFile")}>
+                    <section className={cx("DataFile__Table-body")}>
+                      <table className={cx("DataFile__Table-body-card")}>
+                        <thead className={cx("Table-body-card-header")}>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên File</th>
+                            <th>Kiểu</th>
+                            <th>Ngày Tạo</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className={cx("Table-body-card-body")}>
+                          {bomData.map((file, index) => {
+                            const name = formatFileName(file);
+                            const type = formatFileType(file);
+                            const time = formatFileTime(file);
+                            return (
+                              <tr
+                                key={"DesignData-Item-" + index}
+                                onClick={() => {
+                                  handleDownloadFile(
+                                    folderName,
+                                    "design",
+                                    file
+                                  );
+                                }}
+                              >
+                                <td>{index + 1}</td>
+                                <td>{name}</td>
+                                <td>{"." + type}</td>
+                                <td>{time}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
                 </div>
               </div>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -245,11 +373,12 @@ function ProductDetail() {
                     Assemly Guideline
                   </button>
                 </p>
-                <i className="fa-solid fa-chevron-down"></i>
                 <div className={cx("collapse listDataFile")} id="collapse4">
                   <div className={cx("card card-body DataFile")}></div>
                 </div>
               </div>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -263,11 +392,12 @@ function ProductDetail() {
                     Testing Guideline
                   </button>
                 </p>
-                <i className="fa-solid fa-chevron-down"></i>
                 <div className={cx("collapse listDataFile")} id="collapse5">
                   <div className={cx("card card-body DataFile")}></div>
                 </div>
               </div>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -281,11 +411,12 @@ function ProductDetail() {
                     Lịch sử sản xuất
                   </button>
                 </p>
-                <i className="fa-solid fa-chevron-down"></i>
                 <div className={cx("collapse listDataFile")} id="collapse6">
                   <div className={cx("card card-body DataFile")}></div>
                 </div>
               </div>
+
+              {/*  */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -299,7 +430,6 @@ function ProductDetail() {
                     Trouble Shooting Guideline
                   </button>
                 </p>
-                <i className="fa-solid fa-chevron-down"></i>
                 <div className={cx("collapse listDataFile")} id="collapse7">
                   <div className={cx("card card-body DataFile")}></div>
                 </div>
