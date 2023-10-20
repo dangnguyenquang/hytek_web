@@ -3,14 +3,16 @@ import "./ProductDetail.scss";
 import classNames from "classnames";
 import styles from "./ProductDetail.scss";
 import Header from "../../components/GlobalStyle/Header/Header";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import GetProductImgURL from "./GetProductImgURL";
-import ImageDownloadButton from "./GetProductImgURL";
-import renderImg from "./GetProductImgURL";
-import RenderImg from "./GetProductImgURL";
-import handleDownloadFile from "./HandleDownload";
+import GetProductImgURL from "./Service/GetProductImgURL";
+import ImageDownloadButton from "./Service/GetProductImgURL";
+import renderImg from "./Service/GetProductImgURL";
+import RenderImg from "./Service/GetProductImgURL";
+import handleDownloadFile from "./Service/HandleDownload";
+import handleDeleteProduct from "./Service/HandleDelete";
+import { APIgetDataByFolderName } from "../../APIService/localAPI";
 
 const cx = classNames.bind(styles);
 
@@ -32,7 +34,7 @@ function ProductDetail() {
   // Call API get data by folderName
   useEffect(() => {
     axios
-      .get("http://localhost:3001/show/detail?folderName=" + folderName)
+      .get(APIgetDataByFolderName + folderName)
       .then((response) => {
         const folderData = response.data;
         setProductImg(folderData.img);
@@ -75,6 +77,14 @@ function ProductDetail() {
 
   const handleNavigateAddfile = (folderName) => {
     navigate("/addproduct", { state: folderName });
+  };
+
+  // Hien nut xoa file
+  const showDeleteFileBtn = () => {
+    const deleteBtn = document.querySelectorAll(".RowTableDelete");
+    deleteBtn.forEach((item) => {
+      item.classList.toggle("ActiveShowDeleteBtn");
+    });
   };
 
   return (
@@ -137,7 +147,10 @@ function ProductDetail() {
             </div>
 
             <div className={cx("productdetail-edit")}>
-              <button className={cx("productdetail-edit-delete")}>
+              <button
+                className={cx("productdetail-edit-delete")}
+                onClick={() => showDeleteFileBtn()}
+              >
                 <span>Xóa tệp</span>
                 <span>
                   <i className="fa-solid fa-trash"></i>
@@ -222,21 +235,33 @@ function ProductDetail() {
                             const type = formatFileType(file);
                             const time = formatFileTime(file);
                             return (
-                              <tr
-                                key={"DesignData-Item-" + index}
-                                onClick={() => {
-                                  handleDownloadFile(
-                                    folderName,
-                                    "design",
-                                    file
-                                  );
-                                }}
-                              >
-                                <td>{index + 1}</td>
-                                <td>{name}</td>
-                                <td>{"." + type}</td>
-                                <td>{time}</td>
-                              </tr>
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={"DesignData-Item-" + index}
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "design",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() => handleDeleteProduct(folderName, 'design', file)}
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
                             );
                           })}
                         </tbody>

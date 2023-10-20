@@ -5,6 +5,7 @@ import axios from "axios";
 import classNames from "classnames";
 import styles from "./AddProduct.scss";
 import { Link, useLocation } from "react-router-dom";
+import { APIupload } from "../../APIService/localAPI";
 const cx = classNames.bind(styles);
 
 function AddProduct() {
@@ -141,7 +142,7 @@ function AddProduct() {
 
     // Gui data -> BE
     await axios
-      .post("http://localhost:3001/upload", formData)
+      .post(APIupload, formData)
       // Check status of call API
       .then((response) => {
         if (response.data.result === 1) {

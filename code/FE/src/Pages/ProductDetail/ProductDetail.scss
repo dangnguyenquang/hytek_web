@@ -137,6 +137,23 @@
   }
 }
 
+.DataFile__Item { 
+
+}
+
+.RowTableDelete {
+  display: none;
+  background-color: var(--white-background);
+  &:hover { 
+    background: var(--fail-background) !important;
+  }
+}
+
+.deleteFileBtn { 
+  padding: 5px 8px;
+  color: var(--fail-color);
+}
+
 .Table-body-card-body { 
   width: 100%;
   
@@ -149,8 +166,9 @@
   & td {
     text-overflow: ellipsis;
     cursor: pointer;
-    text-align: center;
     border: solid 1px #ccc;
+    padding: 3px 0;
+    text-align: center;
   }
 }
 
@@ -214,6 +232,9 @@
   }
 }
 
+.ActiveShowDeleteBtn { 
+  display: table-cell;
+}
 
 // Responsive
 @media screen and (max-width: 1199px){
