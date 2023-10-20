@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./ProductDetail.scss";
 import classNames from "classnames";
 import styles from "./ProductDetail.scss";
@@ -10,10 +10,13 @@ import GetProductImgURL from "./GetProductImgURL";
 import ImageDownloadButton from "./GetProductImgURL";
 import renderImg from "./GetProductImgURL";
 import RenderImg from "./GetProductImgURL";
+import handleDownloadFile from "./HandleDownload";
 
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
+  const navigate = useNavigate();
+
   const { folderName } = useParams();
   const [productImg, setProductImg] = useState([]);
   const [designData, setDesignData] = useState([]);
@@ -32,7 +35,6 @@ function ProductDetail() {
       .get("http://localhost:3001/show/detail?folderName=" + folderName)
       .then((response) => {
         const folderData = response.data;
-        console.log(folderData);
         setProductImg(folderData.img);
         setDesignData(folderData.design);
         setGerberData(folderData.gerber);
@@ -71,14 +73,8 @@ function ProductDetail() {
     return fileType;
   };
 
-  const handleDownloadFile = (folderName, folderType, fileName) => {
-    window.location.href =
-      "htth://localhost:3001/show/download/" +
-      folderName +
-      "/" +
-      folderType +
-      "/" +
-      fileName;
+  const handleNavigateAddfile = (folderName) => {
+    navigate("/addproduct", { state: folderName });
   };
 
   return (
@@ -139,25 +135,30 @@ function ProductDetail() {
                 </button>
               </div>
             </div>
+
             <div className={cx("productdetail-edit")}>
-              <button className={cx('productdetail-edit-delete')}>
+              <button className={cx("productdetail-edit-delete")}>
                 <span>Xóa tệp</span>
                 <span>
                   <i className="fa-solid fa-trash"></i>
                 </span>
               </button>
-              <button className={cx('productdetail-edit-add')}>
+              <button
+                className={cx("productdetail-edit-add")}
+                onClick={() => handleNavigateAddfile(folderName)}
+              >
                 <span>Thêm tệp</span>
                 <span>
-                  <i class="fa-solid fa-folder-plus"></i>
+                  <i className="fa-solid fa-folder-plus"></i>
                 </span>
               </button>
             </div>
+
             <div className={cx("productdetail-downloadAll")}>
               <button>
                 <span>Tải tất cả .rar</span>
                 <span>
-                  <i class="fa-solid fa-download"></i>
+                  <i className="fa-solid fa-download"></i>
                 </span>
               </button>
             </div>
@@ -281,11 +282,11 @@ function ProductDetail() {
                               <tr
                                 key={"DesignData-Item-" + index}
                                 onClick={() => {
-                                  handleDownloadFile(
-                                    folderName,
-                                    "design",
-                                    file
-                                  );
+                                  // handleDownloadFile(
+                                  //   folderName,
+                                  //   "design",
+                                  //   file
+                                  // );
                                 }}
                               >
                                 <td>{index + 1}</td>
@@ -338,11 +339,11 @@ function ProductDetail() {
                               <tr
                                 key={"DesignData-Item-" + index}
                                 onClick={() => {
-                                  handleDownloadFile(
-                                    folderName,
-                                    "design",
-                                    file
-                                  );
+                                  // handleDownloadFile(
+                                  //   folderName,
+                                  //   "design",
+                                  //   file
+                                  // );
                                 }}
                               >
                                 <td>{index + 1}</td>

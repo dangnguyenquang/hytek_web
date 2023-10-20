@@ -16,6 +16,7 @@
   box-shadow: var(--primary-boxshadow);
   padding: 20px;
   min-width: 950px;
+  background: var(--white-background);
 }
 
 .carousel-control-prev, .carousel-control-next {
@@ -181,14 +182,26 @@
 .productdetail-edit-add { 
   background-color: var(--sucess-bacground);
   color: var(--sucess-color);
+
+  & span { 
+    padding: 0 5px;
+  }
 }
 
 .productdetail-edit-delete { 
   background-color: var(--fail-background);
   color: var(--fail-color);
+
+  & span { 
+    padding: 0 5px;
+  }
 }
 
 .productdetail-downloadAll { 
+  & span { 
+    padding: 0 5px;
+  }
+
   & button {
     background-color: var(--primary-background);
     color: var(--boldfont-color);

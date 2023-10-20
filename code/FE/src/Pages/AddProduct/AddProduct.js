@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import styles from "./AddProduct.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function AddProduct() {
@@ -75,7 +75,20 @@ function AddProduct() {
     setFolderID(e.target.value);
   };
 
+  const { state } = useLocation();
+  const productUpdate = state;
+
   const handleUpload = async () => {
+    // if (productUpdate != null) {
+    //   setFolderName(productUpdate.slice(0, productUpdate.indexOf("-")));
+    //   setFolderID(
+    //     productUpdate.replace(
+    //       productUpdate.slice(0, productUpdate.indexOf("-") + 1),
+    //       ""
+    //     )
+    //   );
+    // }
+
     if (!folderName || !folderID) {
       const uploadwarning = document.querySelector(".UploadWarning");
       uploadwarning.classList.toggle("activeNotification");
@@ -171,17 +184,6 @@ function AddProduct() {
       });
   };
 
-  // useEffect(() => {
-  //   const listInputHTMLCollection =
-  //     document.getElementsByClassName("selectFile");
-  //   const listInput = [...listInputHTMLCollection];
-  //   listInput.map((input) => {
-  //     for (let i = 0; i < input.files.length; i++) {
-  //       console.log(input.files[i].name);
-  //     }
-  //   });
-  // });
-
   return (
     <Fragment>
       <Header />
@@ -192,17 +194,23 @@ function AddProduct() {
         </div>
 
         <div className={cx("UpdateSuccessed Notification")}>
-          <span className={cx("Notification-Message")}>Cập nhật thành công</span>
+          <span className={cx("Notification-Message")}>
+            Cập nhật thành công
+          </span>
           <i className={cx("fa-solid fa-circle-check updateSuccessICO")}></i>
         </div>
 
         <div className={cx("UploadFailed Notification")}>
-          <span className={cx("Notification-Message")}>Thêm ít nhất 1 file</span>
+          <span className={cx("Notification-Message")}>
+            Thêm ít nhất 1 file
+          </span>
           <i className={cx("fa-solid fa-circle-exclamation updateFailICO")}></i>
         </div>
 
         <div className={cx("UploadWarning Notification")}>
-          <span className={cx("Notification-Message")}>Thêm đầy đủ tên và mã linh kiện</span>
+          <span className={cx("Notification-Message")}>
+            Thêm đầy đủ tên và mã linh kiện
+          </span>
           <i className="fa-solid fa-triangle-exclamation updateWarningICO"></i>
         </div>
 
