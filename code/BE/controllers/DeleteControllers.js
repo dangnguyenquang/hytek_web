@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 class deleteControllers {
+
   deleteFile(req, res) {
     const folderName = req.params.folderName;
     const downloadPath = req.params.downloadPath;
@@ -22,6 +23,7 @@ class deleteControllers {
       res.status(404).json({ error: "Không tìm thấy tệp để xóa." });
     }
   }
+
 }
 
 module.exports = new deleteControllers();

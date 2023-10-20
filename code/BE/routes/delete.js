@@ -4,6 +4,6 @@ const deleteControllers = require('../controllers/DeleteControllers');
 
 // Xử lý các đường dẫn
 // router.get('/folder/:folderName', deleteControllers.deleteFolder);
-router.get('/file/:folderName/:downloadPath/:fileName', deleteControllers.deleteFile);
+router.delete('/file/:folderName/:downloadPath/:fileName', deleteControllers.deleteFile);
   
 module.exports = router; 
