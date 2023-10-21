@@ -9,6 +9,7 @@ import classNames from "classnames";
 import styles from "./Home.scss";
 import logo from "../../assets/hyteklogo.png";
 import moment from "moment-timezone";
+import { handleDeleteFolder } from "../ProductDetail/Service/HandleDelete";
 
 const cx = classNames.bind(styles);
 
@@ -33,10 +34,11 @@ function Home() {
   // Xu ly chuyen trang ProductDetail
   const navigate = useNavigate();
   const handleLinktoProductDetail = (folderName) => {
-    let formatPath = folderName.replace('/', "%2F")
+    let formatPath = folderName.replace("/", "%2F");
     navigate("/product/" + formatPath);
   };
 
+  // Xu ly tim kiem folder
   useEffect(() => {
     async function checkInputCondition() {
       const searchInput = document.querySelector(
@@ -57,6 +59,14 @@ function Home() {
     }
     checkInputCondition();
   }, []);
+
+  // Hien nut xoa folder
+  const showDeleteFileBtn = () => {
+    const deleteBtn = document.querySelectorAll(".RowTableDelete");
+    deleteBtn.forEach((item) => {
+      item.classList.toggle("ActiveShowDeleteBtn");
+    });
+  };
 
   return (
     <Fragment>
@@ -83,29 +93,46 @@ function Home() {
                 </thead>
 
                 <tbody className={cx("table-body-card-body")}>
-                  {
-                  listFolder.map((folder, index) => {
+                  {listFolder.map((folder, index) => {
                     const createAt = moment(folder.createAt)
                       .tz("Asia/Ho_Chi_Minh")
                       .format("DD/MM/YYYY");
                     return (
                       <tr
                         key={"product" + index}
-                        onClick={() =>
-                          handleLinktoProductDetail(folder.folderName)
-                        }
                         className={cx("Product-Item")}
                       >
                         <td> {index + 1} </td>
-                        <td> {folder.name} </td>
+                        <td
+                          onClick={() =>
+                            handleLinktoProductDetail(folder.folderName)
+                          }
+                        >
+                          {folder.name}
+                        </td>
                         <td> {folder.id} </td>
                         <td>{createAt}</td>
+                        <td
+                          className={cx("RowTableDelete")}
+                          onClick={() => handleDeleteFolder(folder.folderName)}
+                        >
+                          <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                        </td>
                       </tr>
                     );
                   })}
                 </tbody>
               </table>
             </section>
+            <button
+              className={cx("productdetail-edit-delete deleteFolder")}
+              onClick={() => showDeleteFileBtn()}
+            >
+              <span>Xóa thư mục</span>
+              <span>
+                <i className="fa-solid fa-trash"></i>
+              </span>
+            </button>
           </div>
         </div>
       </div>

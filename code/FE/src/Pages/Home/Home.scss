@@ -39,6 +39,7 @@
   width: 100%;
   border-radius: 8px;
   min-height: 240px;
+  position: relative;
 }
 
 .showproduct__table-body-cards { 
@@ -88,4 +89,17 @@
 
 .product-item-Hide { 
   display: none;
+}
+
+.showproduct__container-listItem-table { 
+  position: relative;
+}
+
+.deleteFolder { 
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  position: absolute;
+  right: 0;
+  top: -20px;
 }

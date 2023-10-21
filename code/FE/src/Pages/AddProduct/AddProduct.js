@@ -79,17 +79,23 @@ function AddProduct() {
   const { state } = useLocation();
   const productUpdate = state;
 
-  const handleUpload = async () => {
-    // if (productUpdate != null) {
-    //   setFolderName(productUpdate.slice(0, productUpdate.indexOf("-")));
-    //   setFolderID(
-    //     productUpdate.replace(
-    //       productUpdate.slice(0, productUpdate.indexOf("-") + 1),
-    //       ""
-    //     )
-    //   );
-    // }
+  useEffect(() => {
+    if (productUpdate !== null) {
+      const productName = productUpdate.slice(0, productUpdate.indexOf("-"));
+      const productId = productUpdate.replace(
+        productUpdate.slice(0, productUpdate.indexOf("-") + 1),
+        ""
+      );
+      setFolderName(productName);
+      setFolderID(productId);
+    } else {
+      setFolderName(" ");
+      setFolderID(" ");
+    }
+  }, []);
 
+  const handleUpload = async () => {
+    // Xu ly canh bao nguoi dung
     if (!folderName || !folderID) {
       const uploadwarning = document.querySelector(".UploadWarning");
       uploadwarning.classList.toggle("activeNotification");
@@ -217,9 +223,13 @@ function AddProduct() {
 
         <div className={cx("addproduct__box")}>
           {/* Title */}
-          <div className={cx("addproduct__title")}>
-            <h1>Nhập thông tin linh kiện</h1>
-          </div>
+          {productUpdate === null ? (
+            <div className={cx("addproduct__title")}>
+              <h1>Nhập thông tin linh kiện</h1>
+            </div>
+          ) : (
+            <></>
+          )}
 
           <div className={cx("input__product-Name-Id")}>
             {/* Nhap ten */}
@@ -229,7 +239,9 @@ function AddProduct() {
                 type="text"
                 name="Name"
                 placeholder={`Tên` + " " + NameType}
+                value={folderName}
                 onChange={(e) => handleFolderNameChange(e)}
+                style={productUpdate !== null ? { fontWeight: 600 } : {}}
               />
             </div>
 
@@ -241,6 +253,8 @@ function AddProduct() {
                 name="ID"
                 placeholder={`Mã` + " " + NameType}
                 onChange={(e) => handleFolderIDChange(e)}
+                value={folderID}
+                style={productUpdate !== null ? { fontWeight: 600 } : {}}
               />
             </div>
           </div>

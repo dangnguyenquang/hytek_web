@@ -6,13 +6,13 @@ import Header from "../../components/GlobalStyle/Header/Header";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import GetProductImgURL from "./Service/GetProductImgURL";
-import ImageDownloadButton from "./Service/GetProductImgURL";
-import renderImg from "./Service/GetProductImgURL";
 import RenderImg from "./Service/GetProductImgURL";
-import handleDownloadFile from "./Service/HandleDownload";
-import handleDeleteProduct from "./Service/HandleDelete";
+import { handleDeleteProduct } from "./Service/HandleDelete";
 import { APIgetDataByFolderName } from "../../APIService/localAPI";
+import {
+  handleDownloadFile,
+  handleDownloadFolder,
+} from "./Service/HandleDownload";
 
 const cx = classNames.bind(styles);
 
@@ -147,6 +147,7 @@ function ProductDetail() {
             </div>
 
             <div className={cx("productdetail-edit")}>
+              {/* Delete Button */}
               <button
                 className={cx("productdetail-edit-delete")}
                 onClick={() => showDeleteFileBtn()}
@@ -156,6 +157,8 @@ function ProductDetail() {
                   <i className="fa-solid fa-trash"></i>
                 </span>
               </button>
+
+              {/* Add Button */}
               <button
                 className={cx("productdetail-edit-add")}
                 onClick={() => handleNavigateAddfile(folderName)}
@@ -168,7 +171,8 @@ function ProductDetail() {
             </div>
 
             <div className={cx("productdetail-downloadAll")}>
-              <button>
+              {/* Download All Button */}
+              <button onClick={() => handleDownloadFolder(folderName)}>
                 <span>Tải tất cả .rar</span>
                 <span>
                   <i className="fa-solid fa-download"></i>
@@ -202,7 +206,7 @@ function ProductDetail() {
             <div className={cx("productdetail__card-Data-ListData")}>
               <h1>Các tệp lưu trữ</h1>
 
-              {/*  */}
+              {/* Design Data */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -256,7 +260,13 @@ function ProductDetail() {
                                   <td>{time}</td>
                                   <td
                                     className={cx("RowTableDelete")}
-                                    onClick={() => handleDeleteProduct(folderName, 'design', file)}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "design",
+                                        file
+                                      )
+                                    }
                                   >
                                     <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
                                   </td>
@@ -271,7 +281,7 @@ function ProductDetail() {
                 </div>
               </div>
 
-              {/*  */}
+              {/* Gerber Data */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -304,21 +314,39 @@ function ProductDetail() {
                             const type = formatFileType(file);
                             const time = formatFileTime(file);
                             return (
-                              <tr
-                                key={"DesignData-Item-" + index}
-                                onClick={() => {
-                                  // handleDownloadFile(
-                                  //   folderName,
-                                  //   "design",
-                                  //   file
-                                  // );
-                                }}
-                              >
-                                <td>{index + 1}</td>
-                                <td>{name}</td>
-                                <td>{"." + type}</td>
-                                <td>{time}</td>
-                              </tr>
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={"GerberData-Item-" + index}
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "gerber",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "gerber",
+                                        file
+                                      )
+                                    }
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
                             );
                           })}
                         </tbody>
@@ -328,7 +356,7 @@ function ProductDetail() {
                 </div>
               </div>
 
-              {/*  */}
+              {/* BOM Data */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -361,21 +389,39 @@ function ProductDetail() {
                             const type = formatFileType(file);
                             const time = formatFileTime(file);
                             return (
-                              <tr
-                                key={"DesignData-Item-" + index}
-                                onClick={() => {
-                                  // handleDownloadFile(
-                                  //   folderName,
-                                  //   "design",
-                                  //   file
-                                  // );
-                                }}
-                              >
-                                <td>{index + 1}</td>
-                                <td>{name}</td>
-                                <td>{"." + type}</td>
-                                <td>{time}</td>
-                              </tr>
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={"bomData-Item-" + index}
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "bom",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "bom",
+                                        file
+                                      )
+                                    }
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
                             );
                           })}
                         </tbody>
@@ -385,7 +431,7 @@ function ProductDetail() {
                 </div>
               </div>
 
-              {/*  */}
+              {/* Assembly Guideline */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -400,11 +446,67 @@ function ProductDetail() {
                   </button>
                 </p>
                 <div className={cx("collapse listDataFile")} id="collapse4">
-                  <div className={cx("card card-body DataFile")}></div>
+                  <div className={cx("card card-body DataFile")}>
+                    <section className={cx("DataFile__Table-body")}>
+                      <table className={cx("DataFile__Table-body-card")}>
+                        <thead className={cx("Table-body-card-header")}>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên File</th>
+                            <th>Kiểu</th>
+                            <th>Ngày Tạo</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className={cx("Table-body-card-body")}>
+                          {assemblyGuideline.map((file, index) => {
+                            const name = formatFileName(file);
+                            const type = formatFileType(file);
+                            const time = formatFileTime(file);
+                            return (
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={"assemblyGuideline-Item-" + index}
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "assembly-guidelines",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "assembly-guidelines",
+                                        file
+                                      )
+                                    }
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
                 </div>
               </div>
 
-              {/*  */}
+              {/* Testing Guideline */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -419,11 +521,67 @@ function ProductDetail() {
                   </button>
                 </p>
                 <div className={cx("collapse listDataFile")} id="collapse5">
-                  <div className={cx("card card-body DataFile")}></div>
+                  <div className={cx("card card-body DataFile")}>
+                    <section className={cx("DataFile__Table-body")}>
+                      <table className={cx("DataFile__Table-body-card")}>
+                        <thead className={cx("Table-body-card-header")}>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên File</th>
+                            <th>Kiểu</th>
+                            <th>Ngày Tạo</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className={cx("Table-body-card-body")}>
+                          {testingGuideline.map((file, index) => {
+                            const name = formatFileName(file);
+                            const type = formatFileType(file);
+                            const time = formatFileTime(file);
+                            return (
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={"testingGuideline-Item-" + index}
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "testing-guidelines",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "testing-guidelines",
+                                        file
+                                      )
+                                    }
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
                 </div>
               </div>
 
-              {/*  */}
+              {/* Product History */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -438,11 +596,67 @@ function ProductDetail() {
                   </button>
                 </p>
                 <div className={cx("collapse listDataFile")} id="collapse6">
-                  <div className={cx("card card-body DataFile")}></div>
+                  <div className={cx("card card-body DataFile")}>
+                    <section className={cx("DataFile__Table-body")}>
+                      <table className={cx("DataFile__Table-body-card")}>
+                        <thead className={cx("Table-body-card-header")}>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên File</th>
+                            <th>Kiểu</th>
+                            <th>Ngày Tạo</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className={cx("Table-body-card-body")}>
+                          {productHistory.map((file, index) => {
+                            const name = formatFileName(file);
+                            const type = formatFileType(file);
+                            const time = formatFileTime(file);
+                            return (
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={"productHistory-Item-" + index}
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "production-history",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "production-history",
+                                        file
+                                      )
+                                    }
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
                 </div>
               </div>
 
-              {/*  */}
+              {/* Trouble Shooting Guideline */}
               <div className={cx("Data-Item")}>
                 <p className={cx("d-inline-flex gap-1 DataTypeBtn")}>
                   <button
@@ -457,7 +671,65 @@ function ProductDetail() {
                   </button>
                 </p>
                 <div className={cx("collapse listDataFile")} id="collapse7">
-                  <div className={cx("card card-body DataFile")}></div>
+                  <div className={cx("card card-body DataFile")}>
+                    <section className={cx("DataFile__Table-body")}>
+                      <table className={cx("DataFile__Table-body-card")}>
+                        <thead className={cx("Table-body-card-header")}>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên File</th>
+                            <th>Kiểu</th>
+                            <th>Ngày Tạo</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className={cx("Table-body-card-body")}>
+                          {troubleShootingGuidelines.map((file, index) => {
+                            const name = formatFileName(file);
+                            const type = formatFileType(file);
+                            const time = formatFileTime(file);
+                            return (
+                              <Fragment key={"Fragment" + index}>
+                                <tr
+                                  className="DataFile__Item"
+                                  key={
+                                    "troubleShootingGuidelines-Item-" + index
+                                  }
+                                >
+                                  <td>{index + 1}</td>
+                                  <td
+                                    onClick={() => {
+                                      handleDownloadFile(
+                                        folderName,
+                                        "trouble-shooting-guidelines",
+                                        file
+                                      );
+                                    }}
+                                  >
+                                    {name}
+                                  </td>
+                                  <td>{"." + type}</td>
+                                  <td>{time}</td>
+                                  <td
+                                    className={cx("RowTableDelete")}
+                                    onClick={() =>
+                                      handleDeleteProduct(
+                                        folderName,
+                                        "trouble-shooting-guidelines",
+                                        file
+                                      )
+                                    }
+                                  >
+                                    <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
+                                  </td>
+                                </tr>
+                              </Fragment>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
                 </div>
               </div>
             </div>
