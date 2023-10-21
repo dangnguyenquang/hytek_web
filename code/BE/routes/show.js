@@ -6,6 +6,7 @@ const showControllers = require('../controllers/ShowControllers');
 router.get('/', showControllers.show);
 router.get('/detail', showControllers.detail);
 router.get('/download/:folderName/:downloadPath/:fileName', showControllers.download);
+router.get('/download/rar/:folderName', showControllers.downloadRar);
 router.get('/renderIMG/:folderName/:fileName', showControllers.renderIMG);
   
 module.exports = router; 

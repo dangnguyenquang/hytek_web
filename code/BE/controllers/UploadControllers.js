@@ -1,6 +1,36 @@
 const productInfo = require("../models/productInfo");
 const fs = require('fs');
 const path = require('path');
+const archiver = require('archiver');
+
+function createRarArchive(nameField) {
+  const folderPath = path.join(__dirname, `../uploads/${nameField}/`);
+  const zipFolder = path.join(__dirname, '../zipFolder');
+  const zipFilePath = path.join(zipFolder, `${nameField}.rar`); // Đường dẫn tới tệp ZIP đích
+
+  // Xoá tệp ZIP nếu đã tồn tại
+  if (fs.existsSync(zipFilePath)) {
+    fs.unlinkSync(zipFilePath);
+  }
+
+  const output = fs.createWriteStream(zipFilePath);
+  const archive = archiver('zip', {
+    zlib: { level: 6 }, // Mức nén tối đa
+  });
+
+  archive.pipe(output);
+  archive.directory(folderPath, nameField);
+  archive.finalize();
+
+  output.on('close', () => {
+    console.log('Thư mục đã được nén và đặt tên lại thành công.');
+  });
+
+  output.on('error', (err) => {
+    console.error('Lỗi khi nén thư mục:', err);
+  });
+}
+
 
 // Hàm lưu data
 async function checkAndSave(folderName, folderID, nameField) {
@@ -49,6 +79,7 @@ class uploadControllers {
         result = 2;
         message = `Đã cập nhật thành công file vào ${nameField}`;
       }
+      createRarArchive(nameField);
     }
 
     var resjson = {

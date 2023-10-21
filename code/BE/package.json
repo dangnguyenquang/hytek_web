@@ -9,6 +9,7 @@
   "author": "NQD",
   "license": "ISC",
   "dependencies": {
+    "archiver": "^6.0.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^7.5.3",

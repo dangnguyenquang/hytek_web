@@ -76,6 +76,12 @@ class showControllers {
     }
   }
 
+  downloadRar (req, res) {
+    const folderName = req.params.folderName;
+    const filePath = path.join(__dirname, `../zipFolder/${folderName}`);
+    res.download(filePath);
+  }
+
   download (req, res) {
     const folderName = req.params.folderName;
     const downloadPath  = req.params.downloadPath ;
