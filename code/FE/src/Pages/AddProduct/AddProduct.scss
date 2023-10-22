@@ -58,12 +58,23 @@
   }
 }
 
+.input__product-Name-Id-Customer { 
+
+}
+
 .input__product-Name-Id { 
   display: grid;
   grid-template-columns: 50% 50%;
 }
 
-.input__product-Name, .input__product-ID {
+.input__product-Customer { 
+  margin-bottom: 40px;
+  & input { 
+    width: 350px !important;
+  }
+}
+
+.input__product-Name, .input__product-ID, .input__product-Customer {
   position: relative;
   padding-top: 20px;
 

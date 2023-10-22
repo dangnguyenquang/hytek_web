@@ -1,18 +1,43 @@
 .HeaderGlobal {
   background-color: var(--white-background);
   z-index: 1;
-  height: 60px;
+  height: 80px;
   box-shadow: var(--primary-boxshadow);
   display: flex;
   align-items: center;
 }
 
-.Header__Logo  { 
-  width: fit-content;
+.Header__Logo  {
   margin-left: 30px;
+  height: 100%;
+  min-width: 260px !important;
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+
+  &::before { 
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    width: 160%;
+    height: 100%;
+    background-image: linear-gradient(to right, #671def, #1573f6);
+    -webkit-transform: skewX(25deg);
+    transform: skewX(25deg);
+    right: 0;
+    overflow: hidden;
+  }
+
+  & > a { 
+    z-index: 1;
+  }
+
   & img {
-    width: 180px;
-    height: 50px;
+    width: 220px;
+    height: 60px;
   }
 }
 

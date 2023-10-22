@@ -45,11 +45,11 @@ function Home() {
         ".showproduct__container-searchbar input"
       );
       searchInput.addEventListener("input", (e) => {
-        // .replace(/[^a-zA-Z ]/g, "")
         let txtSearch = e.target.value.toLowerCase();
         const listProductDOM = document.querySelectorAll(".Product-Item");
         listProductDOM.forEach((item) => {
-          if (item.innerText.toLowerCase().includes(txtSearch)) {
+          let itemtoString = item.innerText.toLowerCase();
+          if (itemtoString.includes(txtSearch)) {
             item.classList.remove("product-item-Hide");
           } else {
             item.classList.add("product-item-Hide");
@@ -72,8 +72,9 @@ function Home() {
     <Fragment>
       <Header />
       <div className={cx("showproduct__container")}>
+        <h1>PRODUCT DATA MANAGEMENT</h1>
         <div className={cx("showproduct__container-searchbar")}>
-          <input type="text" placeholder="Nhập tên hoặc mã sản phẩm" />
+          <input type="text" placeholder="Nhập tên linh kiện hoặc tên khách hàng" />
         </div>
 
         <div className={cx("showproduct__container-listItem")}>
@@ -86,6 +87,7 @@ function Home() {
                 <thead className={cx("table-body-card-header")}>
                   <tr>
                     <th>STT</th>
+                    <th>Khách Hàng</th>
                     <th>Tên Sản Phẩm</th>
                     <th>Mã Sản Phẩm</th>
                     <th>Ngày Tạo</th>
@@ -103,6 +105,7 @@ function Home() {
                         className={cx("Product-Item")}
                       >
                         <td> {index + 1} </td>
+                        <td>{folder.customerName}</td>
                         <td
                           onClick={() =>
                             handleLinktoProductDetail(folder.folderName)

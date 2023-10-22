@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Img } from "react-image";
 
-function RenderImg({folderName, productImgNameList}) {
+function RenderImg({ folderName, productImgNameList }) {
   const [imgURL, setImgURL] = useState("");
   useEffect(() => {
     axios
@@ -19,10 +20,9 @@ function RenderImg({folderName, productImgNameList}) {
         setImgURL(url);
       })
       .catch((error) => {});
-
   }, []);
 
-  return <img src={imgURL}/>;
+  return <img src={imgURL} width={400} height={400} />;
 }
 
 export default RenderImg;

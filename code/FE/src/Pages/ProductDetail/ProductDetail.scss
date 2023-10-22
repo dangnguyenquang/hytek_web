@@ -17,6 +17,8 @@
   padding: 20px;
   min-width: 950px;
   background: var(--white-background);
+  max-height: 563px !important;
+  overflow-x: hidden;
 }
 
 .carousel-control-prev, .carousel-control-next {

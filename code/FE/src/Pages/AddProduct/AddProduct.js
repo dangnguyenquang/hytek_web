@@ -9,7 +9,6 @@ import { APIupload } from "../../APIService/localAPI";
 const cx = classNames.bind(styles);
 
 function AddProduct() {
-  const NameType = "linh kiện";
   const [selectedImgFiles, setSelectedImgFiles] = useState([]);
   const [selectedDesDataFiles, setSelectedDesDataFiles] = useState([]);
   const [selectedHistoryFiles, setSelectedHistoryFiles] = useState([]);
@@ -25,6 +24,7 @@ function AddProduct() {
     useState([]);
   const [folderName, setFolderName] = useState("");
   const [folderID, setFolderID] = useState("");
+  const [customerName, setCustomerName] = useState("");
 
   // Select Img file
   const handleFileImgChange = (e) => {
@@ -66,6 +66,11 @@ function AddProduct() {
     setSelectedTroublerShootingGuidelineFiles(e.target.files);
   };
 
+  // Get customerName
+  const handleCustomerNameChange = (e) => {
+    setCustomerName(e.target.value);
+  };
+
   // GET NAME
   const handleFolderNameChange = (e) => {
     setFolderName(e.target.value);
@@ -89,8 +94,8 @@ function AddProduct() {
       setFolderName(productName);
       setFolderID(productId);
     } else {
-      setFolderName(" ");
-      setFolderID(" ");
+      setFolderName("");
+      setFolderID("");
     }
   }, []);
 
@@ -108,6 +113,7 @@ function AddProduct() {
 
     // Dong goi du lieu tu INPUT
     const formData = new FormData();
+    formData.append("customerName", customerName);
     formData.append("folderName", folderName);
     formData.append("folderID", folderID);
     // Add IMG file
@@ -216,7 +222,7 @@ function AddProduct() {
 
         <div className={cx("UploadWarning Notification")}>
           <span className={cx("Notification-Message")}>
-            Thêm đầy đủ tên và mã linh kiện
+            Thêm đầy đủ tên, mã linh kiện và khách hàng
           </span>
           <i className="fa-solid fa-triangle-exclamation updateWarningICO"></i>
         </div>
@@ -231,31 +237,48 @@ function AddProduct() {
             <></>
           )}
 
-          <div className={cx("input__product-Name-Id")}>
-            {/* Nhap ten */}
-            <div className={cx("input__product-Name")}>
-              <label>Nhập tên {NameType}</label>
-              <input
-                type="text"
-                name="Name"
-                placeholder={`Tên` + " " + NameType}
-                value={folderName}
-                onChange={(e) => handleFolderNameChange(e)}
-                style={productUpdate !== null ? { fontWeight: 600 } : {}}
-              />
-            </div>
+          <div className={cx("input__product-Name-Id-Customer")}>
+            {productUpdate === null ? (
+              <div className={cx("input__product-Customer")}>
+                <label>Nhập tên khách hàng</label>
+                <input
+                  type="text"
+                  name="customer"
+                  placeholder="Tên khách hàng"
+                  value={customerName}
+                  onChange={(e) => handleCustomerNameChange(e)}
+                  style={productUpdate !== null ? { fontWeight: 600 } : {}}
+                />
+              </div>
+            ) : (
+              <></>
+            )}
 
-            {/* Nhap ma */}
-            <div className={cx("input__product-ID")}>
-              <label>Nhập mã {NameType}</label>
-              <input
-                type="text"
-                name="ID"
-                placeholder={`Mã` + " " + NameType}
-                onChange={(e) => handleFolderIDChange(e)}
-                value={folderID}
-                style={productUpdate !== null ? { fontWeight: 600 } : {}}
-              />
+            <div className={cx("input__product-Name-Id")}>
+              {/* Nhap ten */}
+              <div className={cx("input__product-Name")}>
+                <label>Nhập tên linh kiện</label>
+                <input
+                  type="text"
+                  name="Name"
+                  placeholder="Tên linh kiện"
+                  value={folderName}
+                  onChange={(e) => handleFolderNameChange(e)}
+                  style={productUpdate !== null ? { fontWeight: 600 } : {}}
+                />
+              </div>
+              {/* Nhap ma */}
+              <div className={cx("input__product-ID")}>
+                <label>Nhập mã linh kiện</label>
+                <input
+                  type="text"
+                  name="ID"
+                  placeholder="Mã linh kiện"
+                  onChange={(e) => handleFolderIDChange(e)}
+                  value={folderID}
+                  style={productUpdate !== null ? { fontWeight: 600 } : {}}
+                />
+              </div>
             </div>
           </div>
 
