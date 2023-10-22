@@ -4,6 +4,7 @@ const productInfoSchema = new mongoose.Schema({
     name: String,
     id: String,
     folderName: String,
+    customerName: String,
     createAt: { type: Date, default: Date.now }
 }, { collection: 'productInfo' });
 

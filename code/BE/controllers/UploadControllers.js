@@ -33,7 +33,7 @@ function createRarArchive(nameField) {
 
 
 // Hàm lưu data
-async function checkAndSave(folderName, folderID, nameField) {
+async function checkAndSave(folderName, folderID, nameField, customerName) {
   try {
     // Kiểm tra xem có bản tin nào trong "productInfo" có trường "id" trùng với "folderName" không
     const existingProduct = await productInfo.findOne({ folderName: nameField });
@@ -42,7 +42,8 @@ async function checkAndSave(folderName, folderID, nameField) {
       const newProduct = new productInfo({ 
         name: folderName,
         id: folderID,
-        folderName: nameField
+        folderName: nameField,
+        customerName: customerName,
       });
       await newProduct.save();
       console.log("Bản tin đã được lưu thành công.");
@@ -62,6 +63,7 @@ class uploadControllers {
     const folderID = req.body.folderID;
     const folderName = req.body.folderName;
     const nameField = `${folderName}-${folderID}`;
+    const customerName = req.body.customerName;
     const uploadDir = `uploads/${nameField}/`;
 
     var result = 0;
@@ -71,7 +73,7 @@ class uploadControllers {
       result = 0;
       message = `Phải import ít nhất một file vào`;
     } else {
-      const saved = await checkAndSave(folderName, folderID, nameField);
+      const saved = await checkAndSave(folderName, folderID, nameField, customerName);
       if(saved) {
         result = 1;
         message = `Tạo mới thành công`;
