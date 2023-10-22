@@ -54,7 +54,9 @@ body {
   height: 100vh;
   z-index: -1;
   background: url(../../assets/background.jpg);
-  background-repeat: no-repeat !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   filter: brightness(.4);
 }
 
