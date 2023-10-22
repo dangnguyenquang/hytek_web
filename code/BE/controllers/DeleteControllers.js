@@ -3,9 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const archiver = require('archiver'); 
 
-function createRarArchive(nameField) {
-  const folderPath = path.join(__dirname, `../uploads/${nameField}/`);
-  const zipFolder = path.join(__dirname, '../zipFolder');
+function createRarArchive(nameField, customerName) {
+  const folderPath = path.join(__dirname, `../uploads/${customerName}/${nameField}/`);
+  const zipFolder = path.join(__dirname, `../zipFolder/${customerName}`);
   const zipFilePath = path.join(zipFolder, `${nameField}.rar`); // Đường dẫn tới tệp ZIP đích
 
   // Xoá tệp ZIP nếu đã tồn tại
@@ -35,8 +35,9 @@ class deleteControllers {
 
   deleteFolder(req, res) {
     const folderName = req.params.folderName;
-    const folderPath = path.join(__dirname, `../uploads/${folderName}`);
-    const zipPath = path.join(__dirname, `../zipFolder/${folderName}.rar`);
+    const customerName = req.body.customerName;
+    const folderPath = path.join(__dirname, `../uploads/${customerName}/${folderName}`);
+    const zipPath = path.join(__dirname, `../zipFolder/${customerName}/${folderName}.rar`);
 
     fs.rm(folderPath, { recursive: true }, err => {
       if (err) {
@@ -44,7 +45,7 @@ class deleteControllers {
         res.status(500).json({ error: 'Lỗi khi xóa thư mục.' });
       } else {
         fs.unlinkSync(zipPath);
-        productInfo.findOneAndDelete ({ folderName: folderName })
+        productInfo.findOneAndDelete ({ folderName: folderName, customerName: customerName })
           .then((doc) => {
             if (doc) {
               res.json({ message: 'Thư mục đã được xóa thành công.' });
@@ -63,13 +64,14 @@ class deleteControllers {
     const folderName = req.params.folderName;
     const downloadPath = req.params.downloadPath;
     const fileName = req.params.fileName;
+    const customerName = req.body.customerName;
 
-    const filePath = path.join(__dirname,`../uploads/${folderName}/${downloadPath}/${fileName}`);
+    const filePath = path.join(__dirname,`../uploads/${customerName}/${folderName}/${downloadPath}/${fileName}`);
 
     if (fs.existsSync(filePath)) {
       try {
         fs.unlinkSync(filePath);
-        createRarArchive(folderName);
+        createRarArchive(folderName, customerName);
         res.status(200).json({ message: "Tệp đã được xóa thành công." });
       } catch (error) {
         console.log(error);

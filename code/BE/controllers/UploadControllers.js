@@ -3,9 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
 
-function createRarArchive(nameField) {
-  const folderPath = path.join(__dirname, `../uploads/${nameField}/`);
-  const zipFolder = path.join(__dirname, '../zipFolder');
+function createRarArchive(nameField, customerName) {
+  const folderPath = path.join(__dirname, `../uploads/${customerName}/${nameField}/`);
+  const zipFolder = path.join(__dirname, `../zipFolder/${customerName}`);
+  if (!fs.existsSync(zipFolder)) {
+    // Nếu thư mục không tồn tại, tạo mới thư mục
+    fs.mkdirSync(zipFolder);
+  }
   const zipFilePath = path.join(zipFolder, `${nameField}.rar`); // Đường dẫn tới tệp ZIP đích
 
   // Xoá tệp ZIP nếu đã tồn tại
@@ -30,7 +34,6 @@ function createRarArchive(nameField) {
     console.error('Lỗi khi nén thư mục:', err);
   });
 }
-
 
 // Hàm lưu data
 async function checkAndSave(folderName, folderID, nameField, customerName) {
@@ -64,7 +67,7 @@ class uploadControllers {
     const folderName = req.body.folderName;
     const nameField = `${folderName}-${folderID}`;
     const customerName = req.body.customerName;
-    const uploadDir = `uploads/${nameField}/`;
+    const uploadDir = `uploads/${customerName}/${nameField}/`;
 
     var result = 0;
     var message = "";
@@ -81,7 +84,7 @@ class uploadControllers {
         result = 2;
         message = `Đã cập nhật thành công file vào ${nameField}`;
       }
-      createRarArchive(nameField);
+      createRarArchive(nameField, customerName);
     }
 
     var resjson = {

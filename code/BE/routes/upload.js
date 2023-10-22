@@ -12,10 +12,11 @@ const storage = multer.diskStorage({
     const folderName = req.body.folderName;
     const folderID = req.body.folderID;
     const nameField = `${folderName}-${folderID}`;
+    const customerName = req.body.customerName;
     // Lấy tên trường của file
     const fieldname = file.fieldname;
     // Tạo đường dẫn thư mục đích dựa trên 'name' và 'fieldname'
-    const uploadDir = `uploads/${nameField}/${fieldname}/`;
+    const uploadDir = `uploads/${customerName}/${nameField}/${fieldname}/`;
     fs.mkdirSync(uploadDir, { recursive: true }); // Tạo thư mục đích nếu chưa tồn tại
     cb(null, uploadDir);
   },

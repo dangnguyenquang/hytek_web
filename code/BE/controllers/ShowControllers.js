@@ -41,7 +41,7 @@ class showControllers {
   }
 
   async detail(req, res) {
-    const uploadDir = path.join(__dirname, `../uploads/${req.query.folderName}`);
+    const uploadDir = path.join(__dirname, `../uploads/${req.query.customerName}/${req.query.folderName}`);
 
     try {
       const subfolders = await fs.promises.readdir(uploadDir);
@@ -78,7 +78,8 @@ class showControllers {
 
   downloadRar (req, res) {
     const folderName = req.params.folderName;
-    const filePath = path.join(__dirname, `../zipFolder/${folderName}`);
+    const customerName = req.body.customerName;
+    const filePath = path.join(__dirname, `../zipFolder/${customerName}/${folderName}`);
     res.download(filePath);
   }
 
@@ -86,14 +87,16 @@ class showControllers {
     const folderName = req.params.folderName;
     const downloadPath  = req.params.downloadPath ;
     const fileName = req.params.fileName;
-    const filePath = path.join(__dirname, `../uploads/${folderName}/${downloadPath}/${fileName}`);
+    const customerName = req.body.customerName;
+    const filePath = path.join(__dirname, `../uploads/${customerName}/${folderName}/${downloadPath}/${fileName}`);
     res.download(filePath);
   }
 
   renderIMG (req, res) {
     const folderName = req.params.folderName; 
     const fileName = req.params.fileName;
-    const imagePath = path.join(__dirname, `../uploads/${folderName}/img/${fileName}`);
+    const customerName = req.body.customerName;
+    const imagePath = path.join(__dirname, `../uploads/${customerName}/${folderName}/img/${fileName}`);
     res.sendFile(imagePath);
   }
 }
