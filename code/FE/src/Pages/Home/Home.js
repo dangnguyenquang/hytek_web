@@ -98,7 +98,7 @@ function Home() {
         <div className={cx("showproduct__container-listItem")}>
           <div className={cx("showproduct__container-listItem-table")}>
             <section className={cx("showproduct__table-header")}>
-              <h1>Danh sách sản phẩm</h1>
+              <h1>Danh sách linh kiện</h1>
             </section>
             <section className={cx("showproduct__table-body")}>
               <table className={cx("showproduct__table-body-cards")}>
@@ -106,8 +106,8 @@ function Home() {
                   <tr>
                     <th>STT</th>
                     <th>Khách Hàng</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Mã Sản Phẩm</th>
+                    <th>Tên linh kiện</th>
+                    <th>Mã linh kiện</th>
                     <th>Ngày Tạo</th>
                   </tr>
                 </thead>
