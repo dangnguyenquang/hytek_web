@@ -76,6 +76,19 @@ class showControllers {
     }
   }
 
+  async getArrCustomerName(req, res) {
+    try {
+      const customerNameList = await productInfo.distinct('customerName').exec();
+
+      res.status(200).json({
+        customerNameList: customerNameList
+      });
+    } catch (err) {
+      console.error('Lỗi khi đọc thư mục:', err);
+      res.status(500).json({ error: 'Lỗi khi xử lý yêu cầu' });
+    }
+  }
+
   downloadRar (req, res) {
     const folderName = req.params.folderName;
     const customerName = req.params.customerName;
