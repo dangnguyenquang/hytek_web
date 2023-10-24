@@ -83,6 +83,12 @@ class showControllers {
     res.download(filePath);
   }
 
+  downloadReportFile (req, res) {
+    const customerName = req.body.customerName;
+    const reportPath = path.join(__dirname, `../reportFile/${customerName}.xlsx`);
+    res.download(reportPath);
+  }
+
   download (req, res) {
     const folderName = req.params.folderName;
     const downloadPath  = req.params.downloadPath ;
