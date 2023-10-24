@@ -78,13 +78,13 @@ class showControllers {
 
   downloadRar (req, res) {
     const folderName = req.params.folderName;
-    const customerName = req.body.customerName;
+    const customerName = req.params.customerName;
     const filePath = path.join(__dirname, `../zipFolder/${customerName}/${folderName}`);
     res.download(filePath);
   }
 
   downloadReportFile (req, res) {
-    const customerName = req.body.customerName;
+    const customerName = req.params.customerName;
     const reportPath = path.join(__dirname, `../reportFile/${customerName}.xlsx`);
     res.download(reportPath);
   }
@@ -93,7 +93,7 @@ class showControllers {
     const folderName = req.params.folderName;
     const downloadPath  = req.params.downloadPath ;
     const fileName = req.params.fileName;
-    const customerName = req.body.customerName;
+    const customerName = req.params.customerName;
     const filePath = path.join(__dirname, `../uploads/${customerName}/${folderName}/${downloadPath}/${fileName}`);
     res.download(filePath);
   }
@@ -101,7 +101,7 @@ class showControllers {
   renderIMG (req, res) {
     const folderName = req.params.folderName; 
     const fileName = req.params.fileName;
-    const customerName = req.body.customerName;
+    const customerName = req.params.customerName;
     const imagePath = path.join(__dirname, `../uploads/${customerName}/${folderName}/img/${fileName}`);
     res.sendFile(imagePath);
   }

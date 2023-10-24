@@ -131,7 +131,7 @@ class deleteControllers {
 
   deleteFolder(req, res) {
     const folderName = req.params.folderName;
-    const customerName = req.body.customerName;
+    const customerName = req.params.customerName;
     const folderPath = path.join(__dirname, `../uploads/${customerName}/${folderName}`);
     const zipPath = path.join(__dirname, `../zipFolder/${customerName}/${folderName}.rar`);
 
@@ -167,7 +167,7 @@ class deleteControllers {
     const folderName = req.params.folderName;
     const downloadPath = req.params.downloadPath;
     const fileName = req.params.fileName;
-    const customerName = req.body.customerName;
+    const customerName = req.params.customerName;
 
     const filePath = path.join(__dirname,`../uploads/${customerName}/${folderName}/${downloadPath}/${fileName}`);
 
