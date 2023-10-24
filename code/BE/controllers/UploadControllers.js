@@ -135,7 +135,7 @@ function createRarArchive(nameField, customerName) {
 async function checkAndSave(folderName, folderID, nameField, customerName) {
   try {
     // Kiểm tra xem có bản tin nào trong "productInfo" có trường "id" trùng với "folderName" không
-    const existingProduct = await productInfo.findOne({ folderName: nameField });
+    const existingProduct = await productInfo.findOne({ folderName: nameField, customerName: customerName });
     // Nếu không tìm thấy bản tin, thì lưu bản tin mới vào collection "productInfo"
     if (!existingProduct) {
       const newProduct = new productInfo({ 
