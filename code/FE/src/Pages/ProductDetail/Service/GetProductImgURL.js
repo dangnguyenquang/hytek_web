@@ -1,13 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Img } from "react-image";
+import { APIgetIMG } from "../../../APIService/localAPI";
 
-function RenderImg({ folderName, productImgNameList }) {
+function RenderImg({ customerName, folderName, productImgNameList }) {
   const [imgURL, setImgURL] = useState("");
   useEffect(() => {
     axios
       .get(
-        "http://localhost:3001/show/renderIMG/" +
+        APIgetIMG +
+          "/" +
+          customerName +
+          "/" +
           folderName +
           "/" +
           productImgNameList,

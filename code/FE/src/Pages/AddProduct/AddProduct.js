@@ -86,11 +86,16 @@ function AddProduct() {
 
   useEffect(() => {
     if (productUpdate !== null) {
-      const productName = productUpdate.slice(0, productUpdate.indexOf("-"));
+      const productName = productUpdate.slice(
+        productUpdate.indexOf("&") + 1,
+        productUpdate.indexOf("-")
+      );
       const productId = productUpdate.replace(
         productUpdate.slice(0, productUpdate.indexOf("-") + 1),
         ""
       );
+      const customer = productUpdate.slice(0, productUpdate.indexOf("&"));
+      setCustomerName(customer);
       setFolderName(productName);
       setFolderID(productId);
     } else {
@@ -101,7 +106,7 @@ function AddProduct() {
 
   const handleUpload = async () => {
     // Xu ly canh bao nguoi dung
-    if (!folderName || !folderID) {
+    if (!folderName || !folderID || !customerName) {
       const uploadwarning = document.querySelector(".UploadWarning");
       uploadwarning.classList.toggle("activeNotification");
       setTimeout(() => {
@@ -234,25 +239,22 @@ function AddProduct() {
               <h1>Nhập thông tin linh kiện</h1>
             </div>
           ) : (
-            <></>
+            <div className={cx("addproduct__title")}>
+              <h1>Thêm tệp</h1>
+            </div>
           )}
 
           <div className={cx("input__product-Name-Id-Customer")}>
-            {productUpdate === null ? (
-              <div className={cx("input__product-Customer")}>
-                <label>Nhập tên khách hàng</label>
-                <input
-                  type="text"
-                  name="customer"
-                  placeholder="Tên khách hàng"
-                  value={customerName}
-                  onChange={(e) => handleCustomerNameChange(e)}
-                  style={productUpdate !== null ? { fontWeight: 600 } : {}}
-                />
-              </div>
-            ) : (
-              <></>
-            )}
+            <div className={cx("input__product-Customer")}>
+              <label>Nhập tên khách hàng</label>
+              <input
+                type="text"
+                name="customer"
+                placeholder="Tên khách hàng"
+                value={productUpdate === null ? customerName : customerName}
+                onChange={(e) => handleCustomerNameChange(e)}
+              />
+            </div>
 
             <div className={cx("input__product-Name-Id")}>
               {/* Nhap ten */}
@@ -262,9 +264,8 @@ function AddProduct() {
                   type="text"
                   name="Name"
                   placeholder="Tên linh kiện"
-                  value={folderName}
+                  value={productUpdate === null ? folderName : folderName}
                   onChange={(e) => handleFolderNameChange(e)}
-                  style={productUpdate !== null ? { fontWeight: 600 } : {}}
                 />
               </div>
               {/* Nhap ma */}
@@ -274,9 +275,8 @@ function AddProduct() {
                   type="text"
                   name="ID"
                   placeholder="Mã linh kiện"
+                  value={productUpdate === null ? folderID : folderID}
                   onChange={(e) => handleFolderIDChange(e)}
-                  value={folderID}
-                  style={productUpdate !== null ? { fontWeight: 600 } : {}}
                 />
               </div>
             </div>

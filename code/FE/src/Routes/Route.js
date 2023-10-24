@@ -5,7 +5,7 @@ import ProductDetail from "../Pages/ProductDetail/ProductDetail";
 const publicRoutes = [
   { path: "/", component: Home },
   { path: "/addproduct", component: AddProduct },
-  { path: "/product/:folderName", component: ProductDetail}
+  { path: "/product/:customerNamefolderName", component: ProductDetail}
 ];
 
 const privateRoutes = [];

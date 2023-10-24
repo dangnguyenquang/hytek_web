@@ -28,12 +28,13 @@
 
 .addproduct__box { 
   background-color: var(--white-background);
-  padding: 10px 30px;
+  padding: 10px 20px;
   box-shadow: var(--primary-boxshadow);
-  border-radius: 8px;
   min-height: 450px;
+  max-height: 600px;
   min-width: 680px;
   width: 70%;
+  overflow: scroll;
 
   & > div:not(:last-child) { 
     border-bottom: solid 1px var(--primary-boderColor);

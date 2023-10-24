@@ -1,18 +1,33 @@
 import { useEffect, useState } from "react";
 import {
+  APIExportExcel,
   APIdownloadFolder,
   APIdownloadfile,
 } from "../../../APIService/localAPI";
 
-function handleDownloadFile(folderName, path, fileName) {
+function handleDownloadFile(customerName, folderName, path, fileName) {
   const URLdownload =
-    APIdownloadfile + "/" + folderName + "/" + path + "/" + fileName;
+    APIdownloadfile +
+    "/" +
+    customerName +
+    "/" +
+    folderName +
+    "/" +
+    path +
+    "/" +
+    fileName;
   window.location.href = URLdownload;
 }
 
-function handleDownloadFolder(folderName) {
-  const URLdownload = APIdownloadFolder + "/" + folderName + ".rar";
+function handleDownloadFolder(customerName, folderName) {
+  const URLdownload =
+    APIdownloadFolder + "/" + customerName + "/" + folderName + ".rar";
   window.location.href = URLdownload;
 }
 
-export { handleDownloadFile, handleDownloadFolder };
+function handleExportReportFile(customerName) {
+  const URLdownload = APIExportExcel + "/" + customerName;
+  window.location.href = URLdownload;
+}
+
+export { handleDownloadFile, handleDownloadFolder, handleExportReportFile };

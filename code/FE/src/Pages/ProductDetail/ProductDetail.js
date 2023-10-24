@@ -19,7 +19,15 @@ const cx = classNames.bind(styles);
 function ProductDetail() {
   const navigate = useNavigate();
 
-  const { folderName } = useParams();
+  const { customerNamefolderName } = useParams();
+  const folderName = customerNamefolderName.slice(
+    customerNamefolderName.indexOf("&") + 1
+  );
+  const customerName = customerNamefolderName.slice(
+    0,
+    customerNamefolderName.indexOf("&")
+  );
+
   const [productImg, setProductImg] = useState([]);
   const [designData, setDesignData] = useState([]);
   const [gerberData, setGerberData] = useState([]);
@@ -31,10 +39,12 @@ function ProductDetail() {
     []
   );
 
-  // Call API get data by folderName
+  // Call API get data
   useEffect(() => {
     axios
-      .get(APIgetDataByFolderName + folderName)
+      .get(
+        APIgetDataByFolderName + folderName + "&customerName=" + customerName
+      )
       .then((response) => {
         const folderData = response.data;
         setProductImg(folderData.img);
@@ -75,8 +85,8 @@ function ProductDetail() {
     return fileType;
   };
 
-  const handleNavigateAddfile = (folderName) => {
-    navigate("/addproduct", { state: folderName });
+  const handleNavigateAddfile = (customerName, folderName) => {
+    navigate("/addproduct", { state: customerName + "&" + folderName });
   };
 
   // Hien nut xoa file
@@ -112,6 +122,7 @@ function ProductDetail() {
                           key={"carousel-item" + index}
                         >
                           <RenderImg
+                            customerName={customerName}
                             folderName={folderName}
                             productImgNameList={item}
                           />
@@ -161,7 +172,7 @@ function ProductDetail() {
               {/* Add Button */}
               <button
                 className={cx("productdetail-edit-add")}
-                onClick={() => handleNavigateAddfile(folderName)}
+                onClick={() => handleNavigateAddfile(customerName, folderName)}
               >
                 <span>Thêm tệp</span>
                 <span>
@@ -172,7 +183,9 @@ function ProductDetail() {
 
             <div className={cx("productdetail-downloadAll")}>
               {/* Download All Button */}
-              <button onClick={() => handleDownloadFolder(folderName)}>
+              <button
+                onClick={() => handleDownloadFolder(customerName, folderName)}
+              >
                 <span>Tải tất cả .rar</span>
                 <span>
                   <i className="fa-solid fa-download"></i>
@@ -248,6 +261,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "design",
                                         file
@@ -262,6 +276,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "design",
                                         file
@@ -323,6 +338,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "gerber",
                                         file
@@ -337,6 +353,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "gerber",
                                         file
@@ -398,6 +415,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "bom",
                                         file
@@ -412,6 +430,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "bom",
                                         file
@@ -473,6 +492,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "assembly-guidelines",
                                         file
@@ -487,6 +507,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "assembly-guidelines",
                                         file
@@ -548,6 +569,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "testing-guidelines",
                                         file
@@ -562,6 +584,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "testing-guidelines",
                                         file
@@ -623,6 +646,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "production-history",
                                         file
@@ -637,6 +661,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "production-history",
                                         file
@@ -700,6 +725,7 @@ function ProductDetail() {
                                   <td
                                     onClick={() => {
                                       handleDownloadFile(
+                                        customerName,
                                         folderName,
                                         "trouble-shooting-guidelines",
                                         file
@@ -714,6 +740,7 @@ function ProductDetail() {
                                     className={cx("RowTableDelete")}
                                     onClick={() =>
                                       handleDeleteProduct(
+                                        customerName,
                                         folderName,
                                         "trouble-shooting-guidelines",
                                         file

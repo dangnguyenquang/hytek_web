@@ -1,18 +1,18 @@
 import axios from "axios";
 import { APIdeleteFile, APIdeleteFolder } from "../../../APIService/localAPI";
 
-function handleDeleteProduct(folderName, path, fileName) {
+function handleDeleteProduct(customerName, folderName, path, fileName) {
   axios
-    .delete(APIdeleteFile + "/" + folderName + "/" + path + "/" + fileName)
+    .delete(APIdeleteFile + "/" + customerName + "/" + folderName + "/" + path + "/" + fileName)
     .then((response) => {
       window.location.reload(true);
     })
     .catch((error) => {});
 }
 
-function handleDeleteFolder(folderName) {
+function handleDeleteFolder(customerName, folderName) {
   axios
-    .delete(APIdeleteFolder + "/" + folderName)
+    .delete(APIdeleteFolder + "/" + customerName + "/" + folderName)
     .then((response) => {
       window.location.reload(true);
     })

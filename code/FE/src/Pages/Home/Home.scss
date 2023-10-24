@@ -116,6 +116,59 @@
   padding: 10px;
   border-radius: 4px;
   position: absolute;
+  right: 170px;
+  top: -20px;
+}
+
+.reportFolder {
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  position: absolute;
   right: 0;
   top: -20px;
+  background: var(--sucess-bacground);
+  color: var(--sucess-color);
+  font-size: 1.6rem;
+
+  &:hover { 
+    background: var(--sucess-bacground);
+    color: var(--sucess-color);
+  }
+
+  & span {
+    padding: 0 5px;
+  }
+}
+
+.listCustomerTitle { 
+  font-size: 2rem !important;
+}
+
+.CloseListCustomerTab, .AcceptListCustomerTab {
+  font-size: 1.6rem;
+}
+
+.modal-body { 
+  max-height: 200px;
+  overflow: scroll;
+  padding: 0 10px !important;
+}
+
+.ListCustomerItem { 
+  padding: 5px 0;
+  cursor: pointer;
+  &:hover { 
+    background-color: var(--sucess-bacground);
+  }
+
+  &:not(:last-child) { 
+    border-bottom: solid 1px #ccc;
+  }
+
+  & span { 
+    font-size: 1.6rem;
+  }
+
+
 }

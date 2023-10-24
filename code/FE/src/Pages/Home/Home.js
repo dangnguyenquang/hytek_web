@@ -1,26 +1,26 @@
 import "./Home.scss";
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Moment from "react-moment";
+import { useNavigate } from "react-router-dom";
 import "moment-timezone";
 import Header from "../../components/GlobalStyle/Header/Header";
 import classNames from "classnames";
 import styles from "./Home.scss";
-import logo from "../../assets/hyteklogo.png";
 import moment from "moment-timezone";
 import { handleDeleteFolder } from "../ProductDetail/Service/HandleDelete";
+import { APIgetCustomer, APIshowItem } from "../../APIService/localAPI";
+import { handleExportReportFile } from "../ProductDetail/Service/HandleDownload";
 
 const cx = classNames.bind(styles);
 
 function Home() {
   const [listFolder, setListFolder] = useState([]);
-
+  const [listCustomerName, setListCustomerName] = useState([]);
   // Call API lay du lieu trong Database
   useEffect(() => {
     async function getData() {
       await axios
-        .get("http://localhost:3001/show")
+        .get(APIshowItem)
         .then((response) => {
           setListFolder(response.data.data);
         })
@@ -31,11 +31,26 @@ function Home() {
     getData();
   }, []);
 
+  useEffect(() => {
+    async function getCustomers() {
+      await axios
+        .get(APIgetCustomer)
+        .then((response) => {
+          setListCustomerName(response.data.customerNameList)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    getCustomers();
+  }, []);
+
   // Xu ly chuyen trang ProductDetail
   const navigate = useNavigate();
-  const handleLinktoProductDetail = (folderName) => {
-    let formatPath = folderName.replace("/", "%2F");
-    navigate("/product/" + formatPath);
+  const handleLinktoProductDetail = (customerName, folderName) => {
+    let formatfolderName = folderName.replace("/", "%2F");
+    let formatcustomerName = customerName.replace("/", "%2F");
+    navigate("/product/" + formatcustomerName + "&" + formatfolderName);
   };
 
   // Xu ly tim kiem folder
@@ -74,7 +89,10 @@ function Home() {
       <div className={cx("showproduct__container")}>
         <h1>PRODUCT DATA MANAGEMENT</h1>
         <div className={cx("showproduct__container-searchbar")}>
-          <input type="text" placeholder="Nhập tên linh kiện hoặc tên khách hàng" />
+          <input
+            type="text"
+            placeholder="Nhập tên linh kiện hoặc tên khách hàng"
+          />
         </div>
 
         <div className={cx("showproduct__container-listItem")}>
@@ -108,7 +126,10 @@ function Home() {
                         <td>{folder.customerName}</td>
                         <td
                           onClick={() =>
-                            handleLinktoProductDetail(folder.folderName)
+                            handleLinktoProductDetail(
+                              folder.customerName,
+                              folder.folderName
+                            )
                           }
                         >
                           {folder.name}
@@ -117,7 +138,12 @@ function Home() {
                         <td>{createAt}</td>
                         <td
                           className={cx("RowTableDelete")}
-                          onClick={() => handleDeleteFolder(folder.folderName)}
+                          onClick={() =>
+                            handleDeleteFolder(
+                              folder.customerName,
+                              folder.folderName
+                            )
+                          }
                         >
                           <i className="fa-solid fa-folder-minus deleteFileBtn"></i>
                         </td>
@@ -136,6 +162,71 @@ function Home() {
                 <i className="fa-solid fa-trash"></i>
               </span>
             </button>
+
+            <button
+              type="button"
+              className="btn btn-primary reportFolder productdetail-edit-export"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              <span>Xuất báo cáo</span>
+              <span>
+                <i className="fa-solid fa-file-export"></i>
+              </span>
+            </button>
+
+            <div
+              className="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabIndex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h1
+                      className="modal-title fs-5 listCustomerTitle"
+                      id="staticBackdropLabel"
+                    >
+                      Danh sách khách hàng
+                    </h1>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    {listCustomerName.map((item, index) => {
+                      return (
+                        <div
+                          key={"customer" + index}
+                          className={cx("ListCustomerItem")}
+                          onClick={() =>
+                            handleExportReportFile(item)
+                          }
+                        >
+                          <span>{item}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary CloseListCustomerTab"
+                      data-bs-dismiss="modal"
+                    >
+                      Đóng
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
