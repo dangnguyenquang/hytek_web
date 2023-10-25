@@ -64,7 +64,7 @@ function ProductDetail() {
   // Chuan hoa file time
   const formatFileTime = (file) => {
     let fileTime = new Date(
-      +file.slice(file.indexOf("_") + 1, file.indexOf("."))
+      +file.slice(file.indexOf("$") + 1, file.indexOf("."))
     );
     const createAt = moment(fileTime)
       .tz("Asia/Ho_Chi_Minh")
@@ -75,7 +75,7 @@ function ProductDetail() {
 
   // Chuan hoa file name
   const formatFileName = (file) => {
-    let fileName = file.slice(0, file.indexOf("_"));
+    let fileName = file.slice(0, file.indexOf("$"));
     return fileName;
   };
 

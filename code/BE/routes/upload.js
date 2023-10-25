@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     // Đặt tên tệp bằng cách kết hợp tên tệp gốc và thời gian tải lên
     const ext = path.extname(file.originalname);
     const fileName = path.basename(file.originalname, ext);
-    const newFileName = `${fileName}_${Date.now()}${ext}`;
+    const newFileName = `${fileName}$${Date.now()}${ext}`;
     cb(null, newFileName);
   },
 });
